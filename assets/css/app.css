@@ -1,0 +1,230 @@
+/* This file is for your main application css. */
+
+/* Deleted phoenix.css */
+/* @import "./phoenix.css"; */
+
+html {
+  background: url('/images/riccardo-chiarini-2VDa8bnLM8c-unsplash.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-family: sans-serif;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 28px;
+  margin: 0 0 12px;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+hr {
+  background-color: rgba(9, 30, 66, 0.13);
+  border: 0;
+  height: 1px;
+  margin: 16px 0;
+  padding: 0;
+  width: 100%;
+}
+
+a {
+  color: #172b4d;
+}
+
+a:hover {
+  color: #091e42;
+}
+
+a.disabled,
+a.disabled:hover {
+  color: #6b778c;
+  cursor: default;
+  text-decoration: none;
+}
+
+p {
+  margin: 0 0 8px;
+}
+
+code {
+  background-color: #f4f5f7;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(9, 30, 66, 0.13);
+  color: #eb5a46;
+  padding: 1px 3px;
+  margin: -1px 2px;
+}
+
+pre code {
+  background-color: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: #172b4d;
+  margin: 0;
+  padding: 0;
+}
+
+code,
+pre,
+tt {
+  font-family: SF Mono, Segoe UI Mono, Roboto Mono, Ubuntu Mono, Menlo, Courier,
+    monospace;
+  line-height: 20px;
+}
+
+blockquote {
+  border-left: 1px solid rgba(9, 30, 66, 0.13);
+  color: #6b778c;
+  margin: 12px 0 12px 11px;
+  padding: 0 0 0 12px;
+}
+
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.board-wrapper {
+}
+
+.board-header-wrapper-name {
+  cursor: default;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 32px;
+  padding-left: 4px;
+  padding-right: 2px;
+  text-decoration: none;
+  max-width: calc(100% - 12px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lists {
+  height: 100%;
+}
+
+.list-wrapper {
+  width: 272px;
+  margin: 0 4px;
+  height: 100%;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  border: 1px dotted transparent;
+}
+
+.list-wrapper.mod-add {
+  background-color: rgba(0, 0, 0, 0.24);
+  border-radius: 3px;
+  height: auto;
+  min-height: 32px;
+  padding: 4px;
+  color: white;
+}
+
+.add-list {
+  padding: 6px 8px;
+  color: hsla(0, 0%, 100%, 0.8);
+  transition: color 85ms ease-in;
+}
+
+.list-wrapper:-webkit-drag {
+  transform: rotate(-3deg);
+}
+
+.list-wrapper.is-target {
+  border: 1px dotted #777777;
+}
+
+.list-cards {
+  flex: 1 1 auto;
+  margin-bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0 4px;
+  padding: 0 4px;
+  z-index: 1;
+  min-height: 0;
+}
+
+.list {
+  background-color: #dfe1e6;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  position: relative;
+  white-space: normal;
+}
+
+.list-header {
+  flex: 0 0 auto;
+  padding: 10px 8px;
+  position: relative;
+  min-height: 20px;
+}
+
+.list-card {
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+  cursor: pointer;
+  display: block;
+  margin-bottom: 8px;
+  max-width: 300px;
+  min-height: 20px;
+  position: relative;
+  text-decoration: none;
+  z-index: 0;
+}
+.list-card-details {
+  overflow: hidden;
+  padding: 6px 8px 2px;
+  position: relative;
+  z-index: 10;
+}
+
+.open-card-composer {
+  border-radius: 0 0 3px 3px;
+  color: #6b778c;
+  display: block;
+  flex: 0 0 auto;
+  padding: 8px;
+  position: relative;
+  text-decoration: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

@@ -1,0 +1,45 @@
+<div class="board-wrapper">
+  <div class="board-header-wrapper-name">
+    <h1>Board Title</h1>
+  </div>
+  <div class="lists">
+    <div draggable="true" class="list-wrapper" id="1">
+      <div class="list">
+        <div class="list-header">
+          <h2>
+            Sample List
+          </h2>
+        </div>
+        <div class="list-cards">
+          <div class="list-card">
+            <div class="list-card-details">
+              This is the first card in the first column
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div draggable="true" class="list-wrapper" id="2">
+      <div class="list">
+        <div class="list-header">
+          <h2>
+            List Number 2
+          </h2>
+        </div>
+        <div class="list-cards">
+          <div class="list-card">
+            <div class="list-card-details">
+              This is the first card in the second column
+            </div>
+          </div>
+          <a class="open-card-composer js-open-card-composer" href="#"><span class="icon-sm icon-add"></span><span class="js-add-a-card hide">Add a card</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="list-wrapper mod-add" id="3">
+      <div class="add-list">
+        Add another list
+      </div>
+    </div>
+  </div>
+</div>
