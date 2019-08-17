@@ -14,18 +14,26 @@ function dragAndDrop() {
         selectedList.classList.remove('tilt', 'right', 'left', 'dragging')
       })
     })
+
     elem.addEventListener('dragend', function(event) {
-      console.log('dragend', event.target)
-      selectedList.style.visibility = 'visible'
+      if (selectedList) {
+        selectedList.style.visibility = 'visible'
+      }
     })
 
     elem.addEventListener('dragenter', function(event) {
-      const listWrapper = event.target.closest('div.list-wrapper')
-      listWrapper.classList.add('is-target')
+      console.log('event', event.target)
+      // const listWrapper = event.target.closest('div.list-wrapper')
+      console.log('this', this)
+      this.classList.add('is-target')
     })
 
     elem.addEventListener('dragleave', function(event) {
-      this.classList.remove('is-target')
+      event.preventDefault()
+      console.log(!this.contains(event.target))
+      if (!this.contains(event.target)) {
+        this.classList.remove('is-target')
+      }
     })
 
     elem.addEventListener('dragover', function(event) {
@@ -34,12 +42,12 @@ function dragAndDrop() {
     })
 
     elem.addEventListener('drop', function(event) {
-      console.log('selectedList.id', selectedList.id)
+      event.preventDefault()
 
       const listWrapper = event.target.closest('div.list-wrapper')
-      console.log('listWrapper.id', listWrapper.id)
 
       selectedList.classList.remove('tilt', 'right', 'left', 'dragging')
+      selectedList = undefined
       //   this.appendChild(selectedBox)
     })
   })

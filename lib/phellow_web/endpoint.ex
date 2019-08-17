@@ -1,6 +1,8 @@
 defmodule PhellowWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :phellow
 
+  socket "/live", Phoenix.LiveView.Socket
+
   socket "/socket", PhellowWeb.UserSocket,
     websocket: true,
     longpoll: false

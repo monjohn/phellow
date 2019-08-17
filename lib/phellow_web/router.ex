@@ -1,10 +1,12 @@
 defmodule PhellowWeb.Router do
   use PhellowWeb, :router
+  import Phoenix.LiveView.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
+    plug Phoenix.LiveView.Flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -15,6 +17,8 @@ defmodule PhellowWeb.Router do
 
   scope "/", PhellowWeb do
     pipe_through :browser
+
+    live "/boards", BoardsLive
 
     get "/", PageController, :index
   end

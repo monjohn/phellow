@@ -1,0 +1,33 @@
+<div class="board-wrapper">
+  <div class="board-header-wrapper-name">
+    <h1>Board Title</h1>
+  </div>
+  <div class="lists">
+    <%= for list <- @lists do %>
+      <div draggable="true" class="list-wrapper" id="<%= list.id %>">
+        <div class="list">
+          <div class="list-header">
+            <h2>
+              <%= list.title %>
+            </h2>
+          </div>
+          <div class="list-cards">
+          </div>
+          <%= live_render(@socket, PhellowWeb.ListLive, session: %{board_column_id: 1}) %>
+        </div>
+      </div>
+    <% end %>
+    <div class="list-wrapper " >
+      <div class="list">
+        <input type="text" class="list-name-input" id="new-list-name" />
+        <div>
+          <input type="submit" class="primary" value="Add List"/>
+        </div>
+      </div>
+      <%# <div class="add-list"> %>
+      <%# <i class="material-icons tiny">add</i>
+        Add another list %>
+      <%# </div> %>
+    </div>
+  </div>
+</div>

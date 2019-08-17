@@ -12,6 +12,12 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   font-family: sans-serif;
+  height: 100%;
+}
+
+body,
+main {
+  height: 100%;
 }
 
 h1 {
@@ -111,7 +117,23 @@ ul {
   padding: 0;
 }
 
+textarea,
+input {
+  background-color: #fafbfc;
+  border: none;
+  box-shadow: inset 0 0 0 2px #dfe1e6;
+  color: #172b4d;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  border-radius: 3px;
+  line-height: 20px;
+  margin-bottom: 12px;
+  border-radius: 3px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
 .board-wrapper {
+  height: 100%;
 }
 
 .board-header-wrapper-name {
@@ -156,6 +178,21 @@ ul {
   padding: 6px 8px;
   color: hsla(0, 0%, 100%, 0.8);
   transition: color 85ms ease-in;
+  align-items: center;
+  display: flex;
+}
+
+input[type='submit'].primary {
+  background-color: #5aac44;
+  box-shadow: none;
+  border: none;
+  color: #fff;
+  float: left;
+  min-height: 30px;
+  height: 30px;
+  margin: 2px 0 8px 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .list-wrapper:-webkit-drag {
@@ -163,7 +200,7 @@ ul {
 }
 
 .list-wrapper.is-target {
-  border: 1px dotted #777777;
+  border: 2px dotted #777777;
 }
 
 .list-cards {
@@ -195,6 +232,28 @@ ul {
   min-height: 20px;
 }
 
+.list-name-input {
+  background: #fff;
+  border: none;
+  box-shadow: inset 0 0 0 2px #0079bf;
+  margin: 4px;
+}
+
+.list-header h2 {
+  font-size: 14px;
+}
+
+.list-cards {
+  flex: 1 1 auto;
+  margin-bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0 4px;
+  padding: 0 4px;
+  z-index: 1;
+  min-height: 0;
+}
+
 .list-card {
   background-color: #fff;
   border-radius: 3px;
@@ -213,13 +272,16 @@ ul {
   padding: 6px 8px 2px;
   position: relative;
   z-index: 10;
+
+  color: #172b4d;
 }
 
 .open-card-composer {
   border-radius: 0 0 3px 3px;
   color: #6b778c;
-  display: block;
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
   padding: 8px;
   position: relative;
   text-decoration: none;
