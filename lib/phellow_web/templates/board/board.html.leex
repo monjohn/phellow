@@ -12,22 +12,25 @@
             </h2>
           </div>
           <div class="list-cards">
+            <%= live_render(@socket, PhellowWeb.ListLive, session: %{board_column_id: 1}) %>
+            <div class="open-card-composer">
+              <i class="material-icons tiny">add</i>Add a card
+            </div>
           </div>
-          <%= live_render(@socket, PhellowWeb.ListLive, session: %{board_column_id: 1}) %>
         </div>
       </div>
     <% end %>
     <div class="list-wrapper " >
       <div class="list">
-        <input type="text" class="list-name-input" id="new-list-name" />
-        <div>
-          <input type="submit" class="primary" value="Add List"/>
-        </div>
-      </div>
-      <%# <div class="add-list"> %>
-      <%# <i class="material-icons tiny">add</i>
-        Add another list %>
-      <%# </div> %>
+        <%= form_for :list, "#", [phx_submit: :add_list], fn f -> %>
+        <%= text_input f, :title, id: "new-list-name", class: "list-name-input" %>
+        <%= submit "Add List", class: "primary" %>
+      <% end %>
     </div>
+    <%# <div class="add-list"> %>
+    <%# <i class="material-icons tiny">add</i>
+        Add another list %>
+    <%# </div> %>
   </div>
+</div>
 </div>
