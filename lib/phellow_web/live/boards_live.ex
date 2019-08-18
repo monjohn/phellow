@@ -17,9 +17,10 @@ defmodule PhellowWeb.BoardsLive do
 
   def find_lists do
     [
-      %{title: "List Title", id: 1, cards: [%{details: "This is a description of a card"}]},
-      %{title: "Another List", id: 2, cards: [%{details: "This is a description of a card"}]},
-      %{title: "A third List", id: 3, cards: [%{details: "This is a description of a card"}]}
+      %{title: "In Progress", id: 2, position: 1},
+      %{title: "Upcoming", id: 1, position: 0},
+      %{title: "Done", id: 3, position: 2}
     ]
+    |> Enum.sort_by(&Map.fetch(&1, :position))
   end
 end

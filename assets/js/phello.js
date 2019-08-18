@@ -22,15 +22,12 @@ function dragAndDrop() {
     })
 
     elem.addEventListener('dragenter', function(event) {
-      console.log('event', event.target)
-      // const listWrapper = event.target.closest('div.list-wrapper')
-      console.log('this', this)
       this.classList.add('is-target')
     })
 
     elem.addEventListener('dragleave', function(event) {
       event.preventDefault()
-      console.log(!this.contains(event.target))
+      console.log('contains', !this.contains(event.target))
       if (!this.contains(event.target)) {
         this.classList.remove('is-target')
       }
