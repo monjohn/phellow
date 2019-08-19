@@ -1,0 +1,28 @@
+<h1>Listing Boards</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Img url</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for board <- @boards do %>
+    <tr>
+      <td><%= board.title %></td>
+      <td><%= board.img_url %></td>
+
+      <td>
+        <%= link "Show", to: Routes.board_path(@conn, :show, board) %>
+        <%= link "Edit", to: Routes.board_path(@conn, :edit, board) %>
+        <%= link "Delete", to: Routes.board_path(@conn, :delete, board), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Board", to: Routes.board_path(@conn, :new) %></span>

@@ -1,4 +1,7 @@
 defmodule PhellowWeb.Router do
+  alias PhellowWeb.BoardController
+  alias PhellowWeb.ListController
+
   use PhellowWeb, :router
   import Phoenix.LiveView.Router
 
@@ -11,20 +14,17 @@ defmodule PhellowWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", PhellowWeb do
     pipe_through :browser
 
-    live "/boards", BoardsLive
-
-    get "/", PageController, :index
+    live "/", BoardsLive
+    get "/pages", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", PhellowWeb do
-  #   pipe_through :api
-  # end
+  scope "/admin" do
+    pipe_through :browser
+
+    resources "/boards", BoardController
+    resources "/lists", ListController
+  end
 end
