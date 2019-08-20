@@ -7,6 +7,7 @@ defmodule Phellow.Content do
   alias Phellow.Repo
 
   alias Phellow.Content.Board
+  alias Phellow.Content.List
 
   @doc """
   Returns the list of boards.
@@ -115,6 +116,16 @@ defmodule Phellow.Content do
   """
   def list_lists do
     Repo.all(List)
+  end
+
+  def board_lists(id) do
+    query =
+      from List,
+        where: [board_id: ^id],
+        order_by: [desc: :position],
+        select: [:id, :title, :board_id]
+
+    Repo.all(query)
   end
 
   @doc """

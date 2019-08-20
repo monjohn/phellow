@@ -1,18 +1,23 @@
 defmodule PhellowWeb.BoardsLive do
   use Phoenix.LiveView
+  alias Phellow.Content
 
   def render(assigns) do
     PhellowWeb.BoardView.render("board.html", assigns)
   end
 
   def mount(_session, socket) do
-    {:ok, socket}
-    {:ok, assign(socket, lists: find_lists())}
+    {:ok, assign(socket, lists: lists_for_board(1))}
   end
 
   def handle_event("add_list", %{"list" => %{"title" => title}}, socket) do
-    new_list = %{id: 4, title: title, cards: []}
-    {:noreply, assign(socket, lists: find_lists() ++ [new_list])}
+    Content.create_list(%{title: title, board_id: 1})
+
+    {:noreply, assign(socket, lists: lists_for_board(1))}
+  end
+
+  def lists_for_board(_id) do
+    Content.board_lists(1)
   end
 
   def find_lists do

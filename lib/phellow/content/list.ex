@@ -13,7 +13,7 @@ defmodule Phellow.Content.List do
   @doc false
   def changeset(list, attrs) do
     list
-    |> cast(attrs, [:title, :position])
+    |> cast(attrs, [:title, :position, :board_id])
     |> validate_required([:title])
   end
 end
