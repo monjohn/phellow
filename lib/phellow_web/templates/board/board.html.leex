@@ -13,32 +13,32 @@
           </div>
           <div class="list-cards">
             <%= live_render(@socket, PhellowWeb.ListLive, session: %{list_id: list.id}) %>
-            <div class="open-card-composer">
-              <%= form_for :card, "#", [phx_submit: :add_card], fn f -> %>
-              <%= text_input f, :title, id: "new-list-name", class: "list-name-input" %>
-              <%= hidden_input f, :list_id, value: list.id  %>
-              <button type="submit">
-                <%# <%= submit "Add List", class: "primary" %>
-                <i class="material-icons tiny">add</i>Add a card
-              </button>
-            <% end %>
-          </button>
+            <%= if @show_card_composer == list.id do %>
+              <div class="card-composer">
+                <%= form_for :card, "#", [phx_submit: :add_card], fn f -> %>
+                <%= text_input f, :title, id: "new-list-name", class: "list-name-input", autofocus: true %>
+                <%= hidden_input f, :list_id, value: list.id  %>
+                <%= submit "Add Card", class: "primary" %> <% end %>
+            </div>
+          <% else %>
+            <div class="open-card-composer" phx-click="show_card_composer" phx-value-list_id=<%= list.id %> >
+              <i class="material-icons tiny">add</i>Add a card
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
-<div class="list-wrapper " >
-  <div class="list">
-    <%= form_for :list, "#", [phx_submit: :add_list], fn f -> %>
-    <%= text_input f, :title, id: "new-list-name", class: "list-name-input" %>
-    <%= submit "Add List", class: "primary" %>
   <% end %>
-</div>
-<%# <div class="add-list"> %>
-<%# <i class="material-icons tiny">add</i>
+  <div class="list-wrapper " >
+    <div class="list">
+      <%= form_for :list, "#", [phx_submit: :add_list], fn f -> %>
+      <%= text_input f, :title, id: "new-list-name", class: "list-name-input", autofocus: true %>
+      <%= submit "Add List", class: "primary" %> <% end %>
+  </div>
+  <%# <div class="add-list"> %>
+  <%# <i class="material-icons tiny">add</i>
         Add another list %>
-<%# </div> %>
+  <%# </div> %>
 </div>
 </div>
 </div>

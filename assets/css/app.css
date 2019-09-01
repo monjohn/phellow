@@ -268,12 +268,15 @@ button.primary {
   text-decoration: none;
   z-index: 0;
 }
+
+.list-card {
+  padding: 5px;
+}
 .list-card-details {
   overflow: hidden;
-  padding: 6px 8px 2px;
+  padding: 6px 6px 6px;
   position: relative;
   z-index: 10;
-
   color: #172b4d;
 }
 
