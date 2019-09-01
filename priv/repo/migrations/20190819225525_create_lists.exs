@@ -5,7 +5,7 @@ defmodule Phellow.Repo.Migrations.CreateLists do
     create table(:lists) do
       add :title, :string
       add :position, :integer, default: 0
-      add :board_id, references(:boards, on_delete: :nothing)
+      add :board_id, references(:boards, on_delete: :nothing), null: false
 
       timestamps()
     end
