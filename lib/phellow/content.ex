@@ -212,16 +212,21 @@ defmodule Phellow.Content do
   alias Phellow.Content.Card
 
   @doc """
-  Returns the list of cards.
+  Returns the cards in a list.
 
   ## Examples
 
-      iex> list_cards()
+      iex> cards_for_listds()
       [%Card{}, ...]
 
   """
-  def list_cards do
-    Repo.all(Card)
+  def cards_for_list(id) do
+    q =
+      from Card,
+        where: [list_id: ^id],
+        select: [:id, :title, :description]
+
+    Repo.all(q)
   end
 
   @doc """

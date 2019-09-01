@@ -5,7 +5,9 @@ defmodule Phellow.Content.List do
   schema "lists" do
     field :position, :integer
     field :title, :string
-    field :board_id, :id
+
+    has_many :cards, Phellow.Content.Card
+    belongs_to :board, Phellow.Content.Board
 
     timestamps()
   end

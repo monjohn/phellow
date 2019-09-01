@@ -5,7 +5,7 @@ defmodule Phellow.Content.Card do
   schema "cards" do
     field :description, :string
     field :title, :string
-    field :list_id, :id
+    belongs_to :list, Phellow.Content.List
 
     timestamps()
   end
@@ -13,7 +13,7 @@ defmodule Phellow.Content.Card do
   @doc false
   def changeset(card, attrs) do
     card
-    |> cast(attrs, [:title, :description])
-    |> validate_required([:title, :description])
+    |> cast(attrs, [:title, :description, :list_id])
+    |> validate_required([:title, :list_id])
   end
 end

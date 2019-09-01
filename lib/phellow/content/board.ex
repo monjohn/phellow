@@ -5,6 +5,7 @@ defmodule Phellow.Content.Board do
   schema "boards" do
     field :img_url, :string
     field :title, :string
+    has_many :lists, Phellow.Content.List
 
     timestamps()
   end

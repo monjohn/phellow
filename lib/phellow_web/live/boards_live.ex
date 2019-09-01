@@ -16,6 +16,19 @@ defmodule PhellowWeb.BoardsLive do
     {:noreply, assign(socket, lists: lists_for_board(1))}
   end
 
+  def handle_event("add_card", %{"card" => %{"title" => title, "list_id" => list_id}}, socket) do
+    Content.create_card(%{title: title, list_id: list_id})
+
+    {:noreply, assign(socket, lists: lists_for_board(1))}
+  end
+
+  def handle_event(event, params, socket) do
+    IO.puts(event)
+    IO.inspect(params)
+
+    {:noreply, assign(socket, lists: lists_for_board(1))}
+  end
+
   def lists_for_board(_id) do
     Content.board_lists(1)
   end

@@ -14,23 +14,31 @@
           <div class="list-cards">
             <%= live_render(@socket, PhellowWeb.ListLive, session: %{list_id: list.id}) %>
             <div class="open-card-composer">
-              <i class="material-icons tiny">add</i>Add a card
-            </div>
-          </div>
+              <%= form_for :card, "#", [phx_submit: :add_card], fn f -> %>
+              <%= text_input f, :title, id: "new-list-name", class: "list-name-input" %>
+              <%= hidden_input f, :list_id, value: list.id  %>
+              <button type="submit">
+                <%# <%= submit "Add List", class: "primary" %>
+                <i class="material-icons tiny">add</i>Add a card
+              </button>
+            <% end %>
+          </button>
         </div>
       </div>
-    <% end %>
-    <div class="list-wrapper " >
-      <div class="list">
-        <%= form_for :list, "#", [phx_submit: :add_list], fn f -> %>
-        <%= text_input f, :title, id: "new-list-name", class: "list-name-input" %>
-        <%= submit "Add List", class: "primary" %>
-      <% end %>
     </div>
-    <%# <div class="add-list"> %>
-    <%# <i class="material-icons tiny">add</i>
-        Add another list %>
-    <%# </div> %>
   </div>
+<% end %>
+<div class="list-wrapper " >
+  <div class="list">
+    <%= form_for :list, "#", [phx_submit: :add_list], fn f -> %>
+    <%= text_input f, :title, id: "new-list-name", class: "list-name-input" %>
+    <%= submit "Add List", class: "primary" %>
+  <% end %>
+</div>
+<%# <div class="add-list"> %>
+<%# <i class="material-icons tiny">add</i>
+        Add another list %>
+<%# </div> %>
+</div>
 </div>
 </div>
