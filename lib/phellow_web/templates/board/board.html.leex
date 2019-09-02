@@ -18,27 +18,45 @@
                 <%= form_for :card, "#", [phx_submit: :add_card], fn f -> %>
                 <%= text_input f, :title, id: "new-list-name", class: "list-name-input", autofocus: true %>
                 <%= hidden_input f, :list_id, value: list.id  %>
-                <%= submit "Add Card", class: "primary" %> <% end %>
+                <%= submit "Add Card", class: "primary" %>
+                <div class="close-icon" phx-click="show_card_composer" phx-value-list_id="0">
+                  <i class="material-icons ">close</i>
+                </div>
+              <% end %>
             </div>
           <% else %>
-            <div class="open-card-composer" phx-click="show_card_composer" phx-value-list_id=<%= list.id %> >
-              <i class="material-icons tiny">add</i>Add a card
+            <div class="open-card-composer" phx-click="show_card_composer" phx-value-list_id="<%= list.id %>" >
+              <i class="material-icons tiny">add</i>
+              <div class="add-text">Add a card
+              </div>
             </div>
           <% end %>
         </div>
       </div>
     </div>
   <% end %>
-  <div class="list-wrapper " >
-    <div class="list">
-      <%= form_for :list, "#", [phx_submit: :add_list], fn f -> %>
-      <%= text_input f, :title, id: "new-list-name", class: "list-name-input", autofocus: true %>
-      <%= submit "Add List", class: "primary" %> <% end %>
+  <%= if @show_list_composer == true do %>
+    <div class="list-wrapper " >
+      <div class="list">
+        <div class="card-composer">
+          <%= form_for :list, "#", [phx_submit: :add_list], fn f -> %>
+          <%= text_input f, :title, id: "new-list-name", class: "list-name-input", autofocus: true %>
+          <%= submit "Add List", class: "primary" %>
+          <span class="close-icon" phx-click="show_list_composer" phx-value-should_show="false">
+            <i class="material-icons">close</i>
+          </span>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <%# <div class="add-list"> %>
-  <%# <i class="material-icons tiny">add</i>
-        Add another list %>
-  <%# </div> %>
+<% else %>
+  <div class="list-wrapper mod-add">
+    <div class="show-list-composer" phx-click="show_list_composer" phx-value-should_show="true" >
+      <i class="material-icons">add</i>
+      <span class="add-list-text" > Add a list</span>
+    </div>
+  </div>
+<% end %>
 </div>
 </div>
 </div>

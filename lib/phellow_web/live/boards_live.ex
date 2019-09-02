@@ -7,7 +7,15 @@ defmodule PhellowWeb.BoardsLive do
   end
 
   def mount(_session, socket) do
-    {:ok, assign(socket, lists: lists_for_board(1), show_card_composer: 0)}
+    {:ok,
+     assign(socket, lists: lists_for_board(1), show_card_composer: 0, show_list_composer: false)}
+  end
+
+  def handle_event("show_list_composer", %{"should_show" => value}, socket) do
+    case value do
+      "true" -> {:noreply, assign(socket, show_list_composer: true)}
+      "false" -> {:noreply, assign(socket, show_list_composer: false)}
+    end
   end
 
   def handle_event("add_list", %{"list" => %{"title" => title}}, socket) do

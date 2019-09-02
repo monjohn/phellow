@@ -169,7 +169,7 @@ input {
   background-color: rgba(0, 0, 0, 0.24);
   border-radius: 3px;
   height: auto;
-  min-height: 32px;
+  min-height: 40px;
   padding: 4px;
   color: white;
 }
@@ -180,6 +180,10 @@ input {
   transition: color 85ms ease-in;
   align-items: center;
   display: flex;
+}
+
+.add-list-text {
+  margin-top: 3px;
 }
 
 button.primary {
@@ -223,6 +227,13 @@ button.primary {
   max-height: 100%;
   position: relative;
   white-space: normal;
+}
+
+.show-list-composer {
+  /* background-color: rgba(255, 255, 255, 0.24); */
+  display: flex;
+  align-items: center;
+  height: 32px;
 }
 
 .list-header {
@@ -283,14 +294,24 @@ button.primary {
 .open-card-composer {
   border-radius: 0 0 3px 3px;
   color: #6b778c;
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  position: relative;
   text-decoration: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  align-items: center;
+}
+
+.add-text {
+  display: inline-flex;
+  vertical-align: middle;
+  padding-bottom: 10px;
+}
+
+.close-icon {
+  position: absolute;
+  bottom: 4px;
+  display: inline;
+  color: #6b778c;
+  margin-left: 10px;
 }
