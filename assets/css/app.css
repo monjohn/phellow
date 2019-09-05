@@ -148,6 +148,7 @@ input {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: white;
 }
 
 .lists {
@@ -172,6 +173,10 @@ input {
   min-height: 40px;
   padding: 4px;
   color: white;
+}
+
+.list-wrapper.mod-add:hover {
+  background-color: hsla(0, 0%, 100%, 0.32);
 }
 
 .add-list {
@@ -294,12 +299,20 @@ button.primary {
 .open-card-composer {
   border-radius: 0 0 3px 3px;
   color: #6b778c;
+  display: block;
   text-decoration: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   align-items: center;
+  padding: 4px 8px 0 8px;
+}
+
+.open-card-composer:hover {
+  background-color: rgba(9, 30, 66, 0.13);
+  color: #172b4d;
+  text-decoration: underline;
 }
 
 .add-text {

@@ -122,8 +122,8 @@ defmodule Phellow.Content do
     query =
       from List,
         where: [board_id: ^id],
-        order_by: [desc: :position],
-        select: [:id, :title, :board_id]
+        order_by: [asc: :position],
+        select: [:id, :title, :board_id, :position]
 
     Repo.all(query)
   end
@@ -220,6 +220,26 @@ defmodule Phellow.Content do
       [%Card{}, ...]
 
   """
+  # def reorder_cards(start, the_end) when is_binary(start) or is_binary(the_end) do
+  #   reorder_cards(Integer.parse(start), Integer.parse(the_end))
+  # end
+
+  def reorder_cards(start, the_end) when start < the_end do
+    from(l in List,
+      where: ^start < l.position and l.position <= ^the_end,
+      update: [inc: [position: -1]]
+    )
+    |> Repo.update_all([])
+  end
+
+  def reorder_cards(start, the_end) do
+    from(l in List,
+      where: ^the_end <= l.position and l.position > ^start,
+      update: [inc: [position: 1]]
+    )
+    |> Repo.update_all([])
+  end
+
   def cards_for_list(id) do
     q =
       from Card,

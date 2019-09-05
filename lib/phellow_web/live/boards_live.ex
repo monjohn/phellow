@@ -24,6 +24,20 @@ defmodule PhellowWeb.BoardsLive do
     {:noreply, assign(socket, lists: lists_for_board(1))}
   end
 
+  def handle_event("reorder_list", %{"from_id" => from_id, "to_position" => to_position}, socket) do
+    list = Content.get_list!(from_id)
+
+    IO.puts(list.position)
+    IO.puts(to_position)
+
+    Phellow.Repo.transaction(fn ->
+      Content.reorder_cards(list.position, to_position)
+      Content.update_list(list, %{position: Integer.parse(to_position)})
+    end)
+
+    {:noreply, assign(socket, lists: lists_for_board(1))}
+  end
+
   def handle_event("add_card", %{"card" => %{"title" => title, "list_id" => list_id}}, socket) do
     Content.create_card(%{title: title, list_id: list_id})
 

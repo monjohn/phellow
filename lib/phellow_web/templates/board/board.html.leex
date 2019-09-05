@@ -4,7 +4,7 @@
   </div>
   <div class="lists">
     <%= for list <- @lists do %>
-      <div draggable="true" class="list-wrapper" id="<%= list.id %>">
+      <div draggable="true" class="list-wrapper" id="<%= list.id %>" data-position="<%= list.position %>" phx-hook="List">
         <div class="list">
           <div class="list-header">
             <h2>
@@ -13,30 +13,29 @@
           </div>
           <div class="list-cards">
             <%= live_render(@socket, PhellowWeb.ListLive, session: %{list_id: list.id}) %>
-            <%= if @show_card_composer == list.id do %>
-              <div class="card-composer">
-                <%= form_for :card, "#", [phx_submit: :add_card], fn f -> %>
-                <%= text_input f, :title, id: "new-list-name", class: "list-name-input", autofocus: true %>
-                <%= hidden_input f, :list_id, value: list.id  %>
-                <%= submit "Add Card", class: "primary" %>
-                <div class="close-icon" phx-click="show_card_composer" phx-value-list_id="0">
-                  <i class="material-icons ">close</i>
-                </div>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="open-card-composer" phx-click="show_card_composer" phx-value-list_id="<%= list.id %>" >
-              <i class="material-icons tiny">add</i>
-              <div class="add-text">Add a card
+          </div>
+          <%= if @show_card_composer == list.id do %>
+            <div class="card-composer">
+              <%= form_for :card, "#", [phx_submit: :add_card], fn f -> %>
+              <%= text_input f, :title, id: "new-list-name", class: "list-name-input", autofocus: true %>
+              <%= hidden_input f, :list_id, value: list.id  %>
+              <%= submit "Add Card", class: "primary" %>
+              <div class="close-icon" phx-click="show_card_composer" phx-value-list_id="0">
+                <i class="material-icons ">close</i>
               </div>
-            </div>
-          <% end %>
-        </div>
+            <% end %>
+          </div>
+        <% else %>
+          <a href="#" class="open-card-composer" phx-click="show_card_composer" phx-value-list_id="<%= list.id %>" >
+            <i class="material-icons tiny">add</i>
+            <div class="add-text">Add a card </div>
+          </a>
+        <% end %>
       </div>
     </div>
   <% end %>
   <%= if @show_list_composer == true do %>
-    <div class="list-wrapper " >
+    <div class="list-wrapper" id="0">
       <div class="list">
         <div class="card-composer">
           <%= form_for :list, "#", [phx_submit: :add_list], fn f -> %>

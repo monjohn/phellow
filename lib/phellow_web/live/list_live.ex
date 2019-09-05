@@ -17,4 +17,11 @@ defmodule PhellowWeb.ListLive do
   def mount(%{list_id: id}, socket) do
     {:ok, assign(socket, cards: Content.cards_for_list(id))}
   end
+
+  def handle_info(event, params) do
+    IO.puts(event)
+    IO.inspect(params)
+
+    {:noreply, nil}
+  end
 end
