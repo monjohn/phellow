@@ -15,5 +15,6 @@ defmodule Phellow.Content.Card do
     card
     |> cast(attrs, [:title, :description, :list_id])
     |> validate_required([:title, :list_id])
+    |> foreign_key_constraint(:list_id)
   end
 end
