@@ -153,6 +153,8 @@ input {
 
 .lists {
   height: 100%;
+  overflow: auto;
+  white-space: nowrap;
 }
 
 .list-wrapper {

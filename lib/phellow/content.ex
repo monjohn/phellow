@@ -157,8 +157,17 @@ defmodule Phellow.Content do
 
   """
   def create_list(attrs \\ %{}) do
+    with_position =
+      case attrs do
+        %{position: _} ->
+          attrs
+
+        _ ->
+          Map.put(attrs, "position", next_list_position())
+      end
+
     %List{}
-    |> List.changeset(attrs)
+    |> List.changeset(with_position)
     |> Repo.insert()
   end
 
@@ -196,6 +205,17 @@ defmodule Phellow.Content do
     Repo.delete(list)
   end
 
+  def next_list_position do
+    result =
+      from(list in List, select: max(list.position))
+      |> Repo.one()
+
+    case result do
+      nil -> 0
+      int -> int + 1
+    end
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking list changes.
 
@@ -212,11 +232,12 @@ defmodule Phellow.Content do
   alias Phellow.Content.Card
 
   @doc """
-  Returns the cards in a list.
+  Sets the position of the cards effected by a move
 
   ## Examples
+  Raises `Error` if the arguments are strings
 
-      iex> cards_for_listds()
+      iex> reorder_cards("a", "b")
       [%Card{}, ...]
 
   """
@@ -241,6 +262,15 @@ defmodule Phellow.Content do
     |> Repo.update_all([])
   end
 
+  @doc """
+  Returns the cards in a list.
+
+  ## Examples
+
+      iex> cards_for_listds()
+      [%Card{}, ...]
+
+  """
   def cards_for_list(id) do
     q =
       from Card,

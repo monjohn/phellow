@@ -19,7 +19,7 @@ defmodule PhellowWeb.BoardsLive do
   end
 
   def handle_event("add_list", %{"list" => %{"title" => title}}, socket) do
-    Content.create_list(%{title: title, board_id: 1})
+    Content.create_list(%{"title" => title, "board_id" => 1})
 
     {:noreply, assign(socket, lists: lists_for_board(1))}
   end
@@ -37,7 +37,7 @@ defmodule PhellowWeb.BoardsLive do
   end
 
   def handle_event("add_card", %{"card" => %{"title" => title, "list_id" => list_id}}, socket) do
-    Content.create_card(%{title: title, list_id: list_id})
+    Content.create_card(%{"title" => title, "list_id" => list_id})
 
     {:noreply, assign(socket, lists: lists_for_board(1), show_card_composer: 0)}
   end
