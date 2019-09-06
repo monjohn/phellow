@@ -123,6 +123,22 @@ defmodule Phellow.ContentTest do
       list = list_fixture()
       assert %Ecto.Changeset{} = Content.change_list(list)
     end
+
+    test "reorder_lists/2 reorders list when list moves right" do
+      _list0 = list_fixture(%{position: 0})
+      list1 = list_fixture(%{position: 1})
+
+      Content.reorder_cards(0, 1)
+      assert %{position: 0} = Content.get_list!(list1.id)
+    end
+
+    test "reorder_lists/2 reorders list when list moves left" do
+      list0 = list_fixture(%{position: 0})
+      _list1 = list_fixture(%{position: 1})
+
+      Content.reorder_cards(1, 0)
+      assert %{position: 1} = Content.get_list!(list0.id)
+    end
   end
 
   describe "cards" do

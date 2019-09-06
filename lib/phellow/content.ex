@@ -220,9 +220,10 @@ defmodule Phellow.Content do
       [%Card{}, ...]
 
   """
-  # def reorder_cards(start, the_end) when is_binary(start) or is_binary(the_end) do
-  #   reorder_cards(Integer.parse(start), Integer.parse(the_end))
-  # end
+
+  def reorder_cards(start, the_end) when is_binary(start) or is_binary(the_end) do
+    raise "reorder_cards takes integers"
+  end
 
   def reorder_cards(start, the_end) when start < the_end do
     from(l in List,
@@ -234,7 +235,7 @@ defmodule Phellow.Content do
 
   def reorder_cards(start, the_end) do
     from(l in List,
-      where: ^the_end <= l.position and l.position > ^start,
+      where: ^the_end <= l.position and l.position < ^start,
       update: [inc: [position: 1]]
     )
     |> Repo.update_all([])

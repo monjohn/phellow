@@ -26,13 +26,11 @@ defmodule PhellowWeb.BoardsLive do
 
   def handle_event("reorder_list", %{"from_id" => from_id, "to_position" => to_position}, socket) do
     list = Content.get_list!(from_id)
-
-    IO.puts(list.position)
-    IO.puts(to_position)
+    {parsed_pos, _} = Integer.parse(to_position)
 
     Phellow.Repo.transaction(fn ->
-      Content.reorder_cards(list.position, to_position)
-      Content.update_list(list, %{position: Integer.parse(to_position)})
+      Content.reorder_cards(list.position, parsed_pos)
+      Content.update_list(list, %{position: parsed_pos})
     end)
 
     {:noreply, assign(socket, lists: lists_for_board(1))}
@@ -48,6 +46,7 @@ defmodule PhellowWeb.BoardsLive do
     {:noreply, assign(socket, show_card_composer: String.to_integer(list_id))}
   end
 
+  # For debugging purposes
   def handle_event(event, params, socket) do
     IO.puts(event)
     IO.inspect(params)
