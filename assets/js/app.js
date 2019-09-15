@@ -10,22 +10,47 @@ import css from '../css/app.css'
 // Import dependencies
 //
 import 'phoenix_html'
-// Import local files
-import phello from './phello'
-phello()
 
 import LiveSocket from 'phoenix_live_view'
+import Sortable from 'sortablejs'
+
+let Hooks = {}
 
 let selectedList
-let Hooks = {}
 Hooks.List = {
   mounted() {
     const list = this.el
     const that = this
 
-    console.log('this.viewName', this.viewName)
+    const cards = list.querySelector('div.list-cards')
+    Sortable.create(cards, {
+      group: 'cards', // set both lists to same group
+
+      onEnd: function(event) {
+        console.log('event', event)
+        console.log('from list', event.from.id)
+        console.log('to list', event.to.id)
+        console.log('place', event.newIndex)
+        console.log('card id', event.item.id)
+
+        const details = {
+          from_list: event.from.id,
+          to_list: event.to.id,
+          to_position: event.newIndex,
+          card_id: event.item.id,
+        }
+
+        that.pushEvent('move_card', details)
+      },
+    })
+
+    return
 
     list.addEventListener('dragstart', function(event) {
+      if (event.target.classList.contains('list-wrapper')) {
+        return
+      }
+      console.log('selectedList', selectedList)
       selectedList = event.target
       event.dataTransfer.setData('text/html', event.target)
       event.dataTransfer.dropEffect = 'move'

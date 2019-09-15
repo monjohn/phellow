@@ -214,17 +214,6 @@ button.primary {
   border: 2px dotted #777777;
 }
 
-.list-cards {
-  flex: 1 1 auto;
-  margin-bottom: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin: 0 4px;
-  padding: 0 4px;
-  z-index: 1;
-  min-height: 0;
-}
-
 .list {
   background-color: #dfe1e6;
   border-radius: 3px;

@@ -11,9 +11,7 @@
               <%= list.title %>
             </h2>
           </div>
-          <div class="list-cards">
-            <%= live_render(@socket, PhellowWeb.ListLive, session: %{list_id: list.id}) %>
-          </div>
+          <%= live_render(@socket, PhellowWeb.ListLive, session: %{list_id: list.id}) %>
           <%= if @show_card_composer == list.id do %>
             <div class="card-composer">
               <%= form_for :card, "#", [phx_submit: :add_card], fn f -> %>
