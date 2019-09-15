@@ -27,17 +27,16 @@ Hooks.List = {
       group: 'cards', // set both lists to same group
 
       onEnd: function(event) {
-        console.log('event', event)
         console.log('from list', event.from.id)
         console.log('to list', event.to.id)
         console.log('place', event.newIndex)
         console.log('card id', event.item.id)
 
         const details = {
-          from_list: event.from.id,
-          to_list: event.to.id,
+          from_list: parseInt(event.from.id),
+          to_list: parseInt(event.to.id),
           to_position: event.newIndex,
-          card_id: event.item.id,
+          card_id: parseInt(event.item.id),
         }
 
         that.pushEvent('move_card', details)

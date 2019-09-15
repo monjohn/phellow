@@ -275,6 +275,7 @@ defmodule Phellow.Content do
     q =
       from Card,
         where: [list_id: ^id],
+        order_by: [asc: :position],
         select: [:id, :title, :description]
 
     Repo.all(q)

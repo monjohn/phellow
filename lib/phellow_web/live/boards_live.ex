@@ -40,17 +40,14 @@ defmodule PhellowWeb.BoardsLive do
     %{
       "from_list" => from_list,
       "to_list" => to_list,
-      "to_position" => to_position,
+      "to_position" => position,
       "card_id" => card_id
     } = params
 
-    list = Content.get_list!(from_list)
-    {parsed_pos, _} = Integer.parse(to_position)
+    # {parsed_pos, _} = Integer.parse(to_position)
+    card = Content.get_card!(card_id)
 
-    Phellow.Repo.transaction(fn ->
-      Content.reorder_cards(list.position, parsed_pos)
-      Content.update_list(list, %{position: parsed_pos})
-    end)
+    IO.inspect(Content.update_card(card, %{position: position, list_id: to_list}))
 
     {:noreply, assign(socket, lists: lists_for_board(1))}
   end
