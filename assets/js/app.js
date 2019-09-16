@@ -17,48 +17,35 @@ phello()
 import LiveSocket from 'phoenix_live_view'
 
 let selectedList
-let selectedCard
-
 let Hooks = {}
 Hooks.List = {
   mounted() {
     const list = this.el
     const that = this
 
+    console.log('this.viewName', this.viewName)
+
     list.addEventListener('dragstart', function(event) {
-      const selected = event.target
-      switch (event.target.dataset.type) {
-        case 'list':
-          selectedList = event.target
-          break
-        case 'card':
-          console.log('returning card', event.target)
-          selectedCard = event.target
-
-          break
-      }
-
+      selectedList = event.target
       event.dataTransfer.setData('text/html', event.target)
       event.dataTransfer.dropEffect = 'move'
-      selected.classList.add('dragging', 'tilt')
-      selected.classList.add('right')
+      selectedList.classList.add('dragging', 'tilt')
+      selectedList.classList.add('right')
 
       window.requestAnimationFrame(function() {
-        if (selectedList) selectedList.style.visibility = 'hidden'
-        if (selectedCard) selectedCard.style.opacity = '0.5'
-        selected.classList.remove('tilt', 'right', 'left', 'dragging')
+        event.target.style.visibility = 'hidden'
+        selectedList.classList.remove('tilt', 'right', 'left', 'dragging')
       })
     })
 
     list.addEventListener('dragend', function(event) {
-      console.log('dragend')
-
-      if (selectedList) selectedList.style.visibility = 'visible'
-      if (selectedCard) selectedCard.style.opacity = '1'
+      if (selectedList) {
+        selectedList.style.visibility = 'visible'
+      }
     })
 
     list.addEventListener('dragenter', function(event) {
-      if (selectedList) this.classList.add('is-target')
+      this.classList.add('is-target')
     })
 
     list.addEventListener('dragleave', function(event) {
@@ -76,62 +63,17 @@ Hooks.List = {
 
     list.addEventListener('drop', function(event) {
       event.preventDefault()
-      console.log('dropping')
+      const to = event.target.closest('div.list-wrapper')
 
-      if (selectedList) {
-        const to = event.target.closest('div.list-wrapper')
+      selectedList.classList.remove('tilt', 'right', 'left', 'dragging')
 
-        selectedList.classList.remove('tilt', 'right', 'left', 'dragging')
-
-        const details = {
-          from_id: selectedList.id,
-          to_position: to.dataset.position,
-        }
-
-        that.pushEvent('reorder_list', details)
-        selectedList = undefined
+      const details = {
+        from_id: selectedList.id,
+        to_position: to.dataset.position,
       }
-      if (selectedCard) {
-        selectedCard.style.opacity = '1'
-        const list = event.target.closest('div.card-list')
 
-        // selectedList.classList.remove('tilt', 'right', 'left', 'dragging')
-
-        const details = {
-          from_id: selectedCard.id,
-          to_list: 'insert list here',
-        }
-
-        selectedCard = undefined
-      }
-    })
-
-    const cardList = list.querySelector('div.list-cards')
-    cardList.addEventListener('dragenter', function(event) {
-      if (!cardList.contains(selectedCard)) {
-        this.style.backgroundColor = '#bbb'
-      }
-    })
-
-    cardList.addEventListener('dragleave', function(event) {
-      event.preventDefault()
-
-      if (!this.contains(event.target)) {
-        this.style.backgroundColor = 'transparent'
-      }
-    })
-
-    cardList.addEventListener('dragstart', function(event) {
-      const selectedCard = event.target
-      event.dataTransfer.setData('text/html', event.target)
-      event.dataTransfer.dropEffect = 'move'
-      selectedCard.classList.add('dragging', 'tilt')
-      selectedCard.classList.add('right')
-
-      window.requestAnimationFrame(function() {
-        event.target.style.opacity = '0.5'
-        selectedCard.classList.remove('tilt', 'right', 'left', 'dragging')
-      })
+      that.pushEvent('reorder_list', details)
+      selectedList = undefined
     })
   },
 }

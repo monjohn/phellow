@@ -5,7 +5,7 @@ defmodule PhellowWeb.ListLive do
   def render(assigns) do
     ~L"""
         <%= for card <- @cards do %>
-          <div class="list-card" draggable="true" data-type="card">
+          <div class="list-card">
             <div class="list-card-details">
               <%= card.title %>
             </div>

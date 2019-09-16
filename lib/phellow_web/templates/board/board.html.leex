@@ -4,8 +4,7 @@
   </div>
   <div class="lists">
     <%= for list <- @lists do %>
-      <div data-type="list" class="list-wrapper" id="<%= list.id %>" 
-           data-position="<%= list.position %>" phx-hook="List" draggable="true">
+      <div draggable="true" class="list-wrapper" id="<%= list.id %>" data-position="<%= list.position %>" phx-hook="List">
         <div class="list">
           <div class="list-header">
             <h2>
