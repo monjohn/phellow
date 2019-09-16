@@ -237,16 +237,16 @@ defmodule Phellow.Content do
   ## Examples
   Raises `Error` if the arguments are strings
 
-      iex> reorder_cards("a", "b")
+      iex> reorder_lists("a", "b")
       [%Card{}, ...]
 
   """
 
-  def reorder_cards(start, the_end) when is_binary(start) or is_binary(the_end) do
-    raise "reorder_cards takes integers"
+  def reorder_lists(start, the_end) when is_binary(start) or is_binary(the_end) do
+    raise "reorder_lists takes integers"
   end
 
-  def reorder_cards(start, the_end) when start < the_end do
+  def reorder_lists(start, the_end) when start < the_end do
     from(l in List,
       where: ^start < l.position and l.position <= ^the_end,
       update: [inc: [position: -1]]
@@ -254,7 +254,7 @@ defmodule Phellow.Content do
     |> Repo.update_all([])
   end
 
-  def reorder_cards(start, the_end) do
+  def reorder_lists(start, the_end) do
     from(l in List,
       where: ^the_end <= l.position and l.position < ^start,
       update: [inc: [position: 1]]
@@ -275,6 +275,7 @@ defmodule Phellow.Content do
     q =
       from Card,
         where: [list_id: ^id],
+        order_by: [asc: :position],
         select: [:id, :title, :description]
 
     Repo.all(q)
@@ -294,6 +295,35 @@ defmodule Phellow.Content do
       ** (Ecto.NoResultsError)
 
   """
+
+  def move_card_to_list(card_id, to_list, to_position) do
+    card = get_card!(card_id)
+
+    Phellow.Repo.transaction(fn ->
+      reorder_list_after_removing_card(card)
+      {:ok, card} = update_card(card, %{position: to_position, list_id: to_list})
+      reorder_list_after_adding_card(card)
+    end)
+  end
+
+  def reorder_list_after_adding_card(%Card{list_id: list_id, position: position}) do
+    from(c in Card,
+      where: ^position < c.position,
+      where: c.list_id == ^list_id,
+      update: [inc: [position: 1]]
+    )
+    |> Repo.update_all([])
+  end
+
+  def reorder_list_after_removing_card(%Card{list_id: list_id, position: position}) do
+    from(c in Card,
+      where: ^position < c.position,
+      where: c.list_id == ^list_id,
+      update: [inc: [position: -1]]
+    )
+    |> Repo.update_all([])
+  end
+
   def get_card!(id), do: Repo.get!(Card, id)
 
   @doc """

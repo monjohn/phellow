@@ -6,6 +6,7 @@ defmodule Phellow.Repo.Migrations.CreateCards do
       add :title, :string, null: false
       add :description, :text
       add :list_id, references(:lists, on_delete: :delete_all), null: false
+      add :position, :integer, default: 0
 
       timestamps()
     end
