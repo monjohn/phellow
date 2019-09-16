@@ -24,16 +24,10 @@ Hooks.List = {
 
     const cards = list.querySelector('div.list-cards')
     Sortable.create(cards, {
-      group: 'cards', // set both lists to same group
+      group: 'cards',
 
       onEnd: function(event) {
-        console.log('from list', event.from.id)
-        console.log('to list', event.to.id)
-        console.log('place', event.newIndex)
-        console.log('card id', event.item.id)
-
         const details = {
-          from_list: parseInt(event.from.id),
           to_list: parseInt(event.to.id),
           to_position: event.newIndex,
           card_id: parseInt(event.item.id),
@@ -43,10 +37,9 @@ Hooks.List = {
       },
     })
 
-    return
-
     list.addEventListener('dragstart', function(event) {
-      if (event.target.classList.contains('list-wrapper')) {
+      console.log('event.target', event.target)
+      if (!event.target.classList.contains('list-wrapper')) {
         return
       }
       console.log('selectedList', selectedList)
@@ -86,6 +79,7 @@ Hooks.List = {
     })
 
     list.addEventListener('drop', function(event) {
+      if (!selectedList) return
       event.preventDefault()
       const to = event.target.closest('div.list-wrapper')
 

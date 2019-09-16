@@ -128,7 +128,7 @@ defmodule Phellow.ContentTest do
       _list0 = list_fixture(%{position: 0})
       list1 = list_fixture(%{position: 1})
 
-      Content.reorder_cards(0, 1)
+      Content.reorder_lists(0, 1)
       assert %{position: 0} = Content.get_list!(list1.id)
     end
 
@@ -136,7 +136,7 @@ defmodule Phellow.ContentTest do
       list0 = list_fixture(%{position: 0})
       _list1 = list_fixture(%{position: 1})
 
-      Content.reorder_cards(1, 0)
+      Content.reorder_lists(1, 0)
       assert %{position: 1} = Content.get_list!(list0.id)
     end
   end
