@@ -165,7 +165,6 @@ input {
   display: inline-block;
   vertical-align: top;
   white-space: nowrap;
-  border: 1px dotted transparent;
 }
 
 .list-wrapper.mod-add {
@@ -204,14 +203,6 @@ button.primary {
   margin: 2px 0 8px 4px;
   padding: 4px 12px;
   border-radius: 3px;
-}
-
-.list-wrapper:-webkit-drag {
-  transform: rotate(-3deg);
-}
-
-.list-wrapper.is-target {
-  border: 2px dotted #777777;
 }
 
 .list {

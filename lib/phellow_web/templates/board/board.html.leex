@@ -2,16 +2,17 @@
   <div class="board-header-wrapper-name">
     <h1>Board Title</h1>
   </div>
-  <div class="lists">
+  <div class="lists" phx-hook="Lists"  id="lists" >
     <%= for list <- @lists do %>
-      <div draggable="true" class="list-wrapper" id="<%= list.id %>" data-position="<%= list.position %>" phx-hook="List">
+      <div  class="list-wrapper" id="<%= list.id %>" data-position="<%= list.position %>" phx-hook="List">
         <div class="list">
           <div class="list-header">
             <h2>
               <%= list.title %>
             </h2>
           </div>
-          <%= live_render(@socket, PhellowWeb.ListLive, session: %{list_id: list.id}) %>
+          <%  dom_id = "list" <> Integer.to_string(list.id) %>
+          <%= live_render(@socket, PhellowWeb.ListLive, session: %{list_id: list.id}, id: dom_id) %>
           <%= if @show_card_composer == list.id do %>
             <div class="card-composer">
               <%= form_for :card, "#", [phx_submit: :add_card], fn f -> %>
