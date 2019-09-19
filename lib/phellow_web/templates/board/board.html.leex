@@ -10,6 +10,9 @@
             <h2>
               <%= list.title %>
             </h2>
+            <div class="more-list-actions icons" >
+              <i class="material-icons ">more_horiz</i>
+            </div>
           </div>
           <%  dom_id = "list" <> Integer.to_string(list.id) %>
           <%= live_render(@socket, PhellowWeb.ListLive, session: %{list_id: list.id}, id: dom_id) %>
@@ -40,7 +43,7 @@
           <%= form_for :list, "#", [phx_submit: :add_list], fn f -> %>
           <%= text_input f, :title, id: "new-list-name", class: "list-name-input", autofocus: true %>
           <%= submit "Add List", class: "primary" %>
-          <span class="close-icon" phx-click="show_list_composer" phx-value-should_show="false">
+          <span class="close-icon icons" phx-click="show_list_composer" phx-value-should_show="false">
             <i class="material-icons">close</i>
           </span>
         <% end %>
@@ -57,4 +60,17 @@
 <% end %>
 </div>
 </div>
+<<%= if @show_list_actions == true do %>
+<div id="list-actions" style="top: <%= @list_actions_y %>px; left: <%= @list_actions_x %>px;">
+  <div id="list-actions-header">
+    <span style="width: 28px;"> </span>
+    <span>List Actions</span>
+    <span class="icons" phx-click="show_list_actions" phx-value-should_show="false">
+      <i class="material-icons">close</i>
+    </span>
+  </div>
+  <div id="list-actions-body" >
+  </div>
+</div>
+<% end %>
 </div>

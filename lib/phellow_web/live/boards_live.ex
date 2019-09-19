@@ -8,7 +8,37 @@ defmodule PhellowWeb.BoardsLive do
 
   def mount(_session, socket) do
     {:ok,
-     assign(socket, lists: lists_for_board(1), show_card_composer: 0, show_list_composer: false)}
+     assign(socket,
+       lists: lists_for_board(1),
+       show_card_composer: 0,
+       show_list_actions: false,
+       show_list_composer: false
+     )}
+  end
+
+  # def handle_event("show_list_actions", params, socket) do
+  #   IO.inspect(params)
+
+  #   case "true" do
+  #     "true" ->
+  #       {:noreply,
+  #        assign(socket, show_list_actions: true, list_actions_x: 100, list_actions_y: 200)}
+
+  #     "false" ->
+  #       {:noreply, assign(socket, show_list_actions: false)}
+  #   end
+  # end
+
+  def handle_event(
+        "show_list_actions",
+        %{"should_show" => "true", "left" => x, "top" => y},
+        socket
+      ) do
+    {:noreply, assign(socket, show_list_actions: true, list_actions_x: x, list_actions_y: y)}
+  end
+
+  def handle_event("show_list_actions", %{"should_show" => "false"}, socket) do
+    {:noreply, assign(socket, show_list_actions: false)}
   end
 
   def handle_event("show_list_composer", %{"should_show" => value}, socket) do

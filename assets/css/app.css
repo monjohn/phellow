@@ -224,10 +224,20 @@ button.primary {
 }
 
 .list-header {
-  flex: 0 0 auto;
-  padding: 10px 8px;
+  display: flex;
+  padding: 10px 8px 5px;
   position: relative;
   min-height: 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.more-list-actions {
+  padding: 4px 4px 0 4px;
+}
+.more-list-actions:hover {
+  background-color: rgba(9, 30, 66, 0.13);
+  color: #172b4d;
 }
 
 .list-name-input {
@@ -307,6 +317,31 @@ button.primary {
   position: absolute;
   bottom: 4px;
   display: inline;
-  color: #6b778c;
   margin-left: 10px;
+}
+
+.icons {
+  color: #6b778c;
+}
+
+#list-actions {
+  z-index: 33;
+  position: absolute;
+  height: 120px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25),
+    0 0 0 1px rgba(9, 30, 66, 0.08);
+  overflow: hidden;
+  width: 304px;
+}
+#list-actions-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 10px;
+  color: #6b778c;
+  height: 40px;
+  border-bottom: 1px solid #ddd;
 }

@@ -12,7 +12,6 @@ Hooks.Lists = {
     Sortable.create(this.el, {
       group: 'lists',
       direction: 'horizontal',
-
       fallbackOnBody: false,
       onEnd: function(event) {
         const details = {
@@ -23,20 +22,29 @@ Hooks.Lists = {
         that.pushEvent('reorder_list', details)
       },
     })
+
+    const buttons = document.querySelectorAll('div.more-list-actions')
+    buttons.forEach(button => {
+      button.addEventListener('click', event => {
+        const { left, top } = button.getBoundingClientRect()
+        that.pushEvent('show_list_actions', {
+          should_show: 'true',
+          left,
+          top: top + 65,
+        })
+      })
+    })
   },
 }
 
 Hooks.List = {
   mounted() {
     const that = this
-
     const cards = this.el.querySelector('div.list-cards')
 
     Sortable.create(cards, {
       group: 'cards',
       onEnd: function(event) {
-        console.log('item', event.item)
-        console.log('event.to.dataset', event.to.dataset)
         const details = {
           to_list: parseInt(event.to.dataset.listId),
           to_position: event.newIndex,
