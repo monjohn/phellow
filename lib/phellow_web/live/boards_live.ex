@@ -31,10 +31,16 @@ defmodule PhellowWeb.BoardsLive do
 
   def handle_event(
         "show_list_actions",
-        %{"should_show" => "true", "left" => x, "top" => y},
+        %{"should_show" => "true", "left" => x, "top" => y, "list_id" => list_id},
         socket
       ) do
-    {:noreply, assign(socket, show_list_actions: true, list_actions_x: x, list_actions_y: y)}
+    {:noreply,
+     assign(socket,
+       show_list_actions: true,
+       list_actions_x: x,
+       list_actions_y: y,
+       list_actions_list_id: list_id
+     )}
   end
 
   def handle_event("show_list_actions", %{"should_show" => "false"}, socket) do
@@ -84,7 +90,8 @@ defmodule PhellowWeb.BoardsLive do
   end
 
   def handle_event("show_card_composer", %{"list_id" => list_id}, socket) do
-    {:noreply, assign(socket, show_card_composer: String.to_integer(list_id))}
+    {:noreply,
+     assign(socket, show_list_actions: false, show_card_composer: String.to_integer(list_id))}
   end
 
   # For debugging purposes

@@ -26,11 +26,13 @@ Hooks.Lists = {
     const buttons = document.querySelectorAll('div.more-list-actions')
     buttons.forEach(button => {
       button.addEventListener('click', event => {
+        const list_id = button.closest('div.list-wrapper').id
         const { left, top } = button.getBoundingClientRect()
         that.pushEvent('show_list_actions', {
           should_show: 'true',
           left,
           top: top + 65,
+          list_id: parseInt(list_id),
         })
       })
     })

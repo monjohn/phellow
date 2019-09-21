@@ -22,7 +22,7 @@
               <%= text_input f, :title, id: "new-list-name", class: "list-name-input", autofocus: true %>
               <%= hidden_input f, :list_id, value: list.id  %>
               <%= submit "Add Card", class: "primary" %>
-              <div class="close-icon" phx-click="show_card_composer" phx-value-list_id="0">
+              <div class="close-icon icons" phx-click="show_card_composer" phx-value-list_id="0">
                 <i class="material-icons ">close</i>
               </div>
             <% end %>
@@ -44,7 +44,7 @@
           <%= text_input f, :title, id: "new-list-name", class: "list-name-input", autofocus: true %>
           <%= submit "Add List", class: "primary" %>
           <span class="close-icon icons" phx-click="show_list_composer" phx-value-should_show="false">
-            <i class="material-icons">close</i>
+            <i class="material-icons icons">close</i>
           </span>
         <% end %>
       </div>
@@ -70,6 +70,9 @@
     </span>
   </div>
   <div id="list-actions-body" >
+    <div class="list-actions-item" phx-click="show_card_composer" phx-value-list_id="<%= @list_actions_list_id %>" >Add Card...</div>
+    <div class="list-actions-item" phx-click="move_list">Move List</div>
+    <div class="list-actions-item" phx-click="archive_list">Archive List</div>
   </div>
 </div>
 <% end %>

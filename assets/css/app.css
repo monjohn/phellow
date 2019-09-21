@@ -13,6 +13,7 @@ html {
   -webkit-text-size-adjust: 100%;
   font-family: sans-serif;
   height: 100%;
+  font-size: 14px;
 }
 
 body,
@@ -327,7 +328,7 @@ button.primary {
 #list-actions {
   z-index: 33;
   position: absolute;
-  height: 120px;
+  height: 220px;
   background: #fff;
   border-radius: 3px;
   box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25),
@@ -343,5 +344,20 @@ button.primary {
   padding: 0 10px 0 10px;
   color: #6b778c;
   height: 40px;
-  border-bottom: 1px solid #ddd;
+}
+
+#list-actions-body {
+  padding: 8px 0px;
+  border-top: 1px solid #ddd;
+}
+
+.list-actions-item {
+  color: #172b4d;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.list-actions-item:hover {
+  background-color: rgba(9, 30, 66, 0.0392157);
+  color: rgb(9, 30, 66);
 }
