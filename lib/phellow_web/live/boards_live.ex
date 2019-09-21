@@ -71,6 +71,13 @@ defmodule PhellowWeb.BoardsLive do
     {:noreply, assign(socket, lists: lists_for_board(1))}
   end
 
+  def handle_event("archive_list", %{"list_id" => list_id}, socket) do
+    list = Content.get_list!(list_id)
+    Content.delete_list(list)
+
+    {:noreply, assign(socket, lists: lists_for_board(1), show_list_actions: false)}
+  end
+
   def handle_event("move_card", params, socket) do
     %{
       "to_list" => to_list,

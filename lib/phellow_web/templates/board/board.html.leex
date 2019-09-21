@@ -72,7 +72,7 @@
   <div id="list-actions-body" >
     <div class="list-actions-item" phx-click="show_card_composer" phx-value-list_id="<%= @list_actions_list_id %>" >Add Card...</div>
     <div class="list-actions-item" phx-click="move_list">Move List</div>
-    <div class="list-actions-item" phx-click="archive_list">Archive List</div>
+    <div class="list-actions-item" phx-click="archive_list" phx-value-list_id="<%= @list_actions_list_id %>" >Archive List</div>
   </div>
 </div>
 <% end %>
