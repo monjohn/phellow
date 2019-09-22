@@ -14,6 +14,6 @@ defmodule Phellow.Content.Board do
   def changeset(board, attrs) do
     board
     |> cast(attrs, [:title, :img_url])
-    |> validate_required([:title, :img_url])
+    |> validate_required([:title])
   end
 end

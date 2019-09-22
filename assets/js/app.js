@@ -43,6 +43,7 @@ Hooks.List = {
   mounted() {
     const that = this
     const cards = this.el.querySelector('div.list-cards')
+    if (!cards) return
 
     Sortable.create(cards, {
       group: 'cards',

@@ -190,6 +190,7 @@ input {
   width: 280px;
   border-radius: 3px;
   padding: 10px 6px;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
 }
 
 .board {

@@ -7,30 +7,21 @@ defmodule PhellowWeb.BoardsLive do
   end
 
   def mount(_session, socket) do
+    current_board = Content.get_board!(1)
+
     {:ok,
      assign(socket,
        lists: Content.lists_for_board(1),
-       current_board: Content.get_board!(1),
-       boards: Content.list_boards(),
+       current_board: current_board,
+       boards: boards_to_select(current_board),
        show_boards: false,
+       show_board_composer: false,
        show_card_composer: 0,
        show_list_actions: false,
        show_list_composer: false
      )}
   end
 
-  # def handle_event("show_list_actions", params, socket) do
-  #   IO.inspect(params)
-
-  #   case "true" do
-  #     "true" ->
-  #       {:noreply,
-  #        assign(socket, show_list_actions: true, list_actions_x: 100, list_actions_y: 200)}
-
-  #     "false" ->
-  #       {:noreply, assign(socket, show_list_actions: false)}
-  #   end
-  # end
   def handle_event("show_boards", %{"should_show" => value}, socket) do
     case value do
       "true" -> {:noreply, assign(socket, show_boards: true)}
@@ -40,8 +31,14 @@ defmodule PhellowWeb.BoardsLive do
 
   def handle_event("set_current_board", %{"board_id" => id}, socket) do
     board = Content.get_board!(id)
-    # Content.set_current_board(board)
-    {:noreply, assign(socket, current_board: board.id)}
+
+    {:noreply,
+     assign(socket,
+       current_board: board,
+       boards: boards_to_select(board),
+       show_boards: false,
+       lists: Content.lists_for_board(board.id)
+     )}
   end
 
   def handle_event(
@@ -56,6 +53,35 @@ defmodule PhellowWeb.BoardsLive do
        list_actions_y: y,
        list_actions_list_id: list_id
      )}
+  end
+
+  def handle_event("show_board_composer", %{"should_show" => value}, socket) do
+    case value do
+      "true" -> {:noreply, assign(socket, show_board_composer: true)}
+      "false" -> {:noreply, assign(socket, show_board_composer: false)}
+    end
+  end
+
+  def handle_event("add_board", %{"board" => %{"title" => title}}, socket) do
+    case Content.create_board(%{"title" => title}) do
+      {:ok, board} ->
+        {:noreply,
+         assign(socket,
+           lists: Content.lists_for_board(board.id),
+           current_board: board,
+           show_card_composer: 0
+         )}
+
+      {:error, error} ->
+        IO.inspect(error.errors)
+
+        {:noreply,
+         assign(socket,
+           lists: Content.lists_for_board(1),
+           boards: Content.list_boards(),
+           show_board_composer: 0
+         )}
+    end
   end
 
   def handle_event("show_list_actions", %{"should_show" => "false"}, socket) do
@@ -122,5 +148,10 @@ defmodule PhellowWeb.BoardsLive do
     IO.inspect(params)
 
     {:noreply, assign(socket, lists: Content.lists_for_board(1))}
+  end
+
+  def boards_to_select(current_board) do
+    Content.list_boards()
+    |> Enum.filter(fn board -> board.id != current_board.id end)
   end
 end
