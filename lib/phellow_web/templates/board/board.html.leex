@@ -74,6 +74,7 @@
       <div class="card-composer">
         <%= form_for :list, "#", [phx_submit: :add_list], fn f -> %>
         <%= text_input f, :title, id: "new-list-name", class: "list-name-input", autofocus: true %>
+        <%= hidden_input f, :board_id, value: @current_board.id  %>
         <%= submit "Add List", class: "primary" %>
         <span class="close-icon icons" phx-click="show_list_composer" phx-value-should_show="false">
           <i class="material-icons icons">close</i>

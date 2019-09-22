@@ -69,18 +69,12 @@ defmodule PhellowWeb.BoardsLive do
          assign(socket,
            lists: Content.lists_for_board(board.id),
            current_board: board,
-           show_card_composer: 0
+           boards: boards_to_select(board),
+           show_board_composer: 0
          )}
 
       {:error, error} ->
         IO.inspect(error.errors)
-
-        {:noreply,
-         assign(socket,
-           lists: Content.lists_for_board(1),
-           boards: Content.list_boards(),
-           show_board_composer: 0
-         )}
     end
   end
 
@@ -95,10 +89,10 @@ defmodule PhellowWeb.BoardsLive do
     end
   end
 
-  def handle_event("add_list", %{"list" => %{"title" => title}}, socket) do
-    Content.create_list(%{"title" => title, "board_id" => 1})
+  def handle_event("add_list", %{"list" => %{"title" => title, "board_id" => id}}, socket) do
+    Content.create_list(%{"title" => title, "board_id" => id})
 
-    {:noreply, assign(socket, lists: Content.lists_for_board(1))}
+    {:noreply, assign(socket, lists: Content.lists_for_board(id))}
   end
 
   def handle_event("reorder_list", %{"list_id" => list_id, "to_position" => to_position}, socket) do
@@ -109,14 +103,14 @@ defmodule PhellowWeb.BoardsLive do
       Content.update_list(list, %{position: to_position})
     end)
 
-    {:noreply, assign(socket, lists: Content.lists_for_board(1))}
+    {:noreply, assign(socket, lists: current_lists(socket))}
   end
 
   def handle_event("archive_list", %{"list_id" => list_id}, socket) do
     list = Content.get_list!(list_id)
     Content.delete_list(list)
 
-    {:noreply, assign(socket, lists: Content.lists_for_board(1), show_list_actions: false)}
+    {:noreply, assign(socket, lists: current_lists(socket), show_list_actions: false)}
   end
 
   def handle_event("move_card", params, socket) do
@@ -128,13 +122,13 @@ defmodule PhellowWeb.BoardsLive do
 
     Content.move_card_to_list(card_id, to_list, to_position)
 
-    {:noreply, assign(socket, lists: Content.lists_for_board(1))}
+    {:noreply, assign(socket, lists: current_lists(socket))}
   end
 
   def handle_event("add_card", %{"card" => %{"title" => title, "list_id" => list_id}}, socket) do
     Content.create_card(%{"title" => title, "list_id" => list_id})
 
-    {:noreply, assign(socket, lists: Content.lists_for_board(1), show_card_composer: 0)}
+    {:noreply, assign(socket, lists: current_lists(socket), show_card_composer: 0)}
   end
 
   def handle_event("show_card_composer", %{"list_id" => list_id}, socket) do
@@ -147,11 +141,15 @@ defmodule PhellowWeb.BoardsLive do
     IO.puts(event)
     IO.inspect(params)
 
-    {:noreply, assign(socket, lists: Content.lists_for_board(1))}
+    {:noreply, socket}
   end
 
   def boards_to_select(current_board) do
     Content.list_boards()
     |> Enum.filter(fn board -> board.id != current_board.id end)
+  end
+
+  def current_lists(socket) do
+    Content.lists_for_board(socket.assigns.current_board.id)
   end
 end
