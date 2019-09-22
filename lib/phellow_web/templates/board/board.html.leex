@@ -1,6 +1,22 @@
-<div class="board-wrapper">
+<div class="container" >
+  <div id="board-header">
+    <div phx-click="show_boards" phx-value-should_show="<%= not @show_boards %>">
+      <span>Boards</span>
+    </div>
+  </div>
+  <div class="board-wrapper">
+    <%= if @show_boards == true do %>
+      <div class="boards" >
+        <%= for %{id: id, title: title} <- @boards do %>
+          <div class="board" phx-click="set_current_board" phx-value-board_id="<%= id %>">
+            <%= title %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
   <div class="board-header-wrapper-name">
-    <h1>Board Title</h1>
+    <h1><%= @current_board.title %></h1>
   </div>
   <div class="lists" phx-hook="Lists"  id="lists" >
     <%= for list <- @lists do %>
@@ -70,10 +86,13 @@
     </span>
   </div>
   <div id="list-actions-body" >
+    <div class="divider" ></div>
     <div class="list-actions-item" phx-click="show_card_composer" phx-value-list_id="<%= @list_actions_list_id %>" >Add Card...</div>
     <div class="list-actions-item" phx-click="move_list">Move List</div>
+    <div class="divider" ></div>
     <div class="list-actions-item" phx-click="archive_list" phx-value-list_id="<%= @list_actions_list_id %>" >Archive List</div>
   </div>
 </div>
 <% end %>
+</div>
 </div>

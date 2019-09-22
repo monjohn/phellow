@@ -22,7 +22,7 @@ main {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 28px;
   margin: 0 0 12px;
@@ -133,8 +133,33 @@ input {
   padding: 8px 12px;
   font-size: 14px;
 }
-.board-wrapper {
+
+.container {
   height: 100%;
+}
+
+#board-header {
+  height: 36px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: -8px 0 8px -8px;
+  padding-top: 3px;
+}
+
+#board-header > div {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  border-radius: 3px;
+  padding-top: 8px;
+  padding-left: 16px;
+  margin-left: 16px;
+  font-weight: 700;
+  height: 24px;
+  width: 100px;
+}
+
+#board-header > div:hover {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .board-header-wrapper-name {
@@ -150,6 +175,31 @@ input {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: white;
+}
+.board-wrapper {
+  height: 100%;
+}
+
+.boards {
+  background-color: white;
+  z-index: 10;
+  position: fixed;
+  top: 44px;
+  bottom: auto;
+  max-height: calc(100% - 48px);
+  width: 280px;
+  border-radius: 3px;
+  padding: 10px 6px;
+}
+
+.board {
+  height: 24px;
+  padding-top: 6px;
+  padding-left: 6px;
+}
+
+.board:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .lists {
@@ -281,6 +331,17 @@ button.primary {
 .list-card {
   padding: 5px;
 }
+
+.delete-card {
+  float: right;
+  font-size: 20px !important;
+  color: #fff;
+}
+
+.delete-card:hover {
+  color: #aaa;
+}
+
 .list-card-details {
   overflow: hidden;
   padding: 6px 6px 6px;
@@ -348,7 +409,11 @@ button.primary {
 
 #list-actions-body {
   padding: 8px 0px;
+}
+
+.divider {
   border-top: 1px solid #ddd;
+  margin: 5px 15px;
 }
 
 .list-actions-item {

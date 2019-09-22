@@ -118,7 +118,7 @@ defmodule Phellow.Content do
     Repo.all(List)
   end
 
-  def board_lists(id) do
+  def lists_for_board(id) do
     query =
       from List,
         where: [board_id: ^id],
