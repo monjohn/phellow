@@ -277,13 +277,27 @@ button.primary {
 
 .list-header {
   display: flex;
-  padding: 10px 8px 5px;
+  padding: 0px 8px 5px;
   position: relative;
   min-height: 20px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
+
+.list-header h2 {
+  margin: 8px 0 6px 10px;
+  font-size: 14px;
+  width: 224px;
+}
+.list-header input {
+  margin: 6px 0 4px 1px;
+  font-size: 14px;
+  padding: 4px 4px 4px 8px;
+  font-weight: 700;
+  width: 224px;
+}
+
 .more-list-actions {
   padding: 4px 4px 0 4px;
 }
@@ -298,10 +312,6 @@ button.primary {
   box-shadow: inset 0 0 0 2px #0079bf;
   margin: 4px;
   width: calc(100% - 8px);
-}
-
-.list-header h2 {
-  font-size: 14px;
 }
 
 .list-cards {

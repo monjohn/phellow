@@ -18,7 +18,8 @@ defmodule PhellowWeb.BoardsLive do
        show_board_composer: false,
        show_card_composer: 0,
        show_list_actions: false,
-       show_list_composer: false
+       show_list_composer: false,
+       edit_list_title: 0
      )}
   end
 
@@ -134,6 +135,21 @@ defmodule PhellowWeb.BoardsLive do
   def handle_event("show_card_composer", %{"list_id" => list_id}, socket) do
     {:noreply,
      assign(socket, show_list_actions: false, show_card_composer: String.to_integer(list_id))}
+  end
+
+  def handle_event("edit_list_title", %{"list_id" => list_id}, socket) do
+    {:noreply, assign(socket, edit_list_title: String.to_integer(list_id))}
+  end
+
+  def handle_event("update_list_title", %{"list_id" => list_id, "title" => title}, socket) do
+    list = Content.get_list!(list_id)
+
+    if list.title != title do
+      Content.update_list(list, %{title: title})
+      {:noreply, assign(socket, edit_list_title: 0, lists: current_lists(socket))}
+    else
+      {:noreply, assign(socket, edit_list_title: 0)}
+    end
   end
 
   # For debugging purposes
