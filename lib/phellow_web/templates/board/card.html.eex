@@ -1,0 +1,13 @@
+<% dom_id = "list" <> Integer.to_string(@list_id) %>
+<div class="list-cards" id="<%= dom_id %>" data-list-id="<%= @list_id %>" >
+  <%= for card <- @cards do %>
+    <div class="list-card" data-card-id="<%= card.id %>" data-list-id="<%= @list_id %>" >
+      <div  phx-click="archive_card" phx-value-card_id="<%= card.id %>">
+        <i class="material-icons delete-card">delete</i>
+      </div>
+      <div class="list-card-details">
+        <%= card.title %>
+      </div>
+    </div>
+  <% end %>
+</div>

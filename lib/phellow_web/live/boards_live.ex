@@ -152,6 +152,17 @@ defmodule PhellowWeb.BoardsLive do
     end
   end
 
+  def handle_event("archive_card", %{"card_id" => id}, socket) do
+    card = Content.get_card!(id)
+
+    Phellow.Repo.transaction(fn ->
+      Content.delete_card(card)
+      Content.reorder_list_after_removing_card(card)
+    end)
+
+    {:noreply, assign(socket, lists: Content.lists_for_board(1), show_card_composer: 0)}
+  end
+
   # For debugging purposes
   def handle_event(event, params, socket) do
     IO.puts(event)

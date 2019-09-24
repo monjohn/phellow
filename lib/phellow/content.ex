@@ -123,6 +123,7 @@ defmodule Phellow.Content do
       from List,
         where: [board_id: ^id],
         order_by: [asc: :position],
+        preload: [:cards],
         select: [:id, :title, :board_id, :position]
 
     Repo.all(query)

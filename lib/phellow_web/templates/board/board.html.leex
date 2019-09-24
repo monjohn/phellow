@@ -47,7 +47,7 @@
         </div>
       </div>
       <%  dom_id = "list" <> Integer.to_string(list.id) %>
-      <%= live_render(@socket, PhellowWeb.ListLive, session: %{list_id: list.id}, id: dom_id) %>
+      <%= render("list.html", list_id: list.id, cards: list.cards) %>
       <%= if @show_card_composer == list.id do %>
         <div class="card-composer">
           <%= form_for :card, "#", [phx_submit: :add_card], fn f -> %>
