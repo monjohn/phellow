@@ -6,12 +6,12 @@
       <div  phx-click="archive_card" phx-value-card_id="<%= card.id %>">
         <i class="material-icons delete-card">delete</i>
       </div>
-      <input style="display:<%= if editing?, do: "block", else: "none" %>" autofocus 
-        name="card-title"  phx-hook="CardTitle" value="<%= card.title %>" data-card_id="<%= card.id %>"></input>
-    <div phx-click="edit_card_title" phx-value-card_id="<%= card.id %>"
+      <textarea style="display:<%= if editing?, do: "block", else: "none" %>" autofocus 
+        name="card-title"  phx-hook="CardTitle" value="<%= card.title %>" data-card_id="<%= card.id %>"><%= card.title %></textarea>
+      <div phx-click="edit_card_title" phx-value-card_id="<%= card.id %>"
        class="list-card-title" style="display: <%= if editing?, do: "none", else: "block" %>" >
-      <%= card.title %>
+        <%= card.title %>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 </div>
