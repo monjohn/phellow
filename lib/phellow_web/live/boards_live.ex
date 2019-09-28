@@ -1,12 +1,17 @@
 defmodule PhellowWeb.BoardsLive do
   use Phoenix.LiveView
   alias Phellow.Content
+  alias Phellow.Endpoint
+
+  @topic "board_updates"
 
   def render(assigns) do
     PhellowWeb.BoardView.render("board.html", assigns)
   end
 
   def mount(_session, socket) do
+    Phoenix.PubSub.subscribe(Phellow.PubSub, @topic)
+
     current_board = Content.get_board!(1)
 
     {:ok,
@@ -21,6 +26,10 @@ defmodule PhellowWeb.BoardsLive do
        show_list_composer: false,
        edit_list_title: 0
      )}
+  end
+
+  def update_board_for_subscribers(board_id) do
+    Phoenix.PubSub.broadcast(Phellow.PubSub, @topic, {__MODULE__, {:update_board, board_id}})
   end
 
   def handle_event("show_boards", %{"should_show" => value}, socket) do
@@ -93,6 +102,7 @@ defmodule PhellowWeb.BoardsLive do
   def handle_event("add_list", %{"list" => %{"title" => title, "board_id" => id}}, socket) do
     Content.create_list(%{"title" => title, "board_id" => id})
 
+    update_board_for_subscribers(socket.assigns.current_board.id)
     {:noreply, assign(socket, lists: Content.lists_for_board(id))}
   end
 
@@ -104,6 +114,7 @@ defmodule PhellowWeb.BoardsLive do
       Content.update_list(list, %{position: to_position})
     end)
 
+    update_board_for_subscribers(socket.assigns.current_board.id)
     {:noreply, assign(socket, lists: current_lists(socket))}
   end
 
@@ -111,6 +122,7 @@ defmodule PhellowWeb.BoardsLive do
     list = Content.get_list!(list_id)
     Content.delete_list(list)
 
+    update_board_for_subscribers(socket.assigns.current_board.id)
     {:noreply, assign(socket, lists: current_lists(socket), show_list_actions: false)}
   end
 
@@ -123,12 +135,14 @@ defmodule PhellowWeb.BoardsLive do
 
     Content.move_card_to_list(card_id, to_list, to_position)
 
+    update_board_for_subscribers(socket.assigns.current_board.id)
     {:noreply, assign(socket, lists: current_lists(socket))}
   end
 
   def handle_event("add_card", %{"card" => %{"title" => title, "list_id" => list_id}}, socket) do
     Content.create_card(%{"title" => title, "list_id" => list_id})
 
+    update_board_for_subscribers(socket.assigns.current_board.id)
     {:noreply, assign(socket, lists: current_lists(socket), show_card_composer: 0)}
   end
 
@@ -146,6 +160,7 @@ defmodule PhellowWeb.BoardsLive do
 
     if list.title != title do
       Content.update_list(list, %{title: title})
+      update_board_for_subscribers(socket.assigns.current_board.id)
       {:noreply, assign(socket, edit_list_title: 0, lists: current_lists(socket))}
     else
       {:noreply, assign(socket, edit_list_title: 0)}
@@ -158,6 +173,7 @@ defmodule PhellowWeb.BoardsLive do
     Phellow.Repo.transaction(fn ->
       Content.delete_card(card)
       Content.reorder_list_after_removing_card(card)
+      update_board_for_subscribers(socket.assigns.current_board.id)
     end)
 
     {:noreply, assign(socket, lists: Content.lists_for_board(1), show_card_composer: 0)}
@@ -168,6 +184,20 @@ defmodule PhellowWeb.BoardsLive do
     IO.puts(event)
     IO.inspect(params)
 
+    {:noreply, socket}
+  end
+
+  def handle_info({__MODULE__, {:update_board, board_id}}, socket) do
+    if socket.assigns.current_board.id == board_id do
+      {:noreply, assign(socket, lists: current_lists(socket))}
+    else
+      {:noreply, socket}
+    end
+  end
+
+  def handle_info({__MODULE__, data}, socket) do
+    IO.puts("Not Handled")
+    IO.inspect(data)
     {:noreply, socket}
   end
 

@@ -1,5 +1,7 @@
 defmodule PhellowWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :phellow
+  use Phoenix.Endpoint,
+    otp_app: :phellow,
+    pubsub: [name: Phellow.PubSub, adapter: Phoenix.PubSub.PG2]
 
   socket "/live", Phoenix.LiveView.Socket
 
