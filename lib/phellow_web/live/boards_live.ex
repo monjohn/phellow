@@ -1,7 +1,6 @@
 defmodule PhellowWeb.BoardsLive do
   use Phoenix.LiveView
   alias Phellow.Content
-  alias Phellow.Endpoint
 
   @topic "board_updates"
 
@@ -24,7 +23,8 @@ defmodule PhellowWeb.BoardsLive do
        show_card_composer: 0,
        show_list_actions: false,
        show_list_composer: false,
-       edit_list_title: 0
+       edit_list_title: 0,
+       edit_card_title: 0
      )}
   end
 
@@ -164,6 +164,22 @@ defmodule PhellowWeb.BoardsLive do
       {:noreply, assign(socket, edit_list_title: 0, lists: current_lists(socket))}
     else
       {:noreply, assign(socket, edit_list_title: 0)}
+    end
+  end
+
+  def handle_event("edit_card_title", %{"card_id" => card_id}, socket) do
+    {:noreply, assign(socket, edit_card_title: String.to_integer(card_id))}
+  end
+
+  def handle_event("update_card_title", %{"card_id" => card_id, "title" => title}, socket) do
+    card = Content.get_card!(card_id)
+
+    if card.title != title do
+      Content.update_card(card, %{title: title})
+      update_board_for_subscribers(socket.assigns.current_board.id)
+      {:noreply, assign(socket, edit_card_title: 0, lists: current_lists(socket))}
+    else
+      {:noreply, assign(socket, edit_card_title: 0)}
     end
   end
 

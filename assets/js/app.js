@@ -74,5 +74,19 @@ Hooks.ListTitle = {
   },
 }
 
+Hooks.CardTitle = {
+  mounted() {
+    const that = this
+    const input = this.el
+
+    input.addEventListener('blur', e => {
+      that.pushEvent('update_card_title', {
+        card_id: input.dataset.card_id,
+        title: input.value,
+      })
+    })
+  },
+}
+
 let liveSocket = new LiveSocket('/live', Socket, { hooks: Hooks })
 liveSocket.connect()

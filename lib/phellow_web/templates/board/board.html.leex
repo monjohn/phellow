@@ -47,7 +47,7 @@
         </div>
       </div>
       <%  dom_id = "list" <> Integer.to_string(list.id) %>
-      <%= render("list.html", list_id: list.id, cards: list.cards) %>
+      <%= render("list.html", list_id: list.id, cards: list.cards, edit_card_title: @edit_card_title) %>
       <%= if @show_card_composer == list.id do %>
         <div class="card-composer">
           <%= form_for :card, "#", [phx_submit: :add_card], fn f -> %>
