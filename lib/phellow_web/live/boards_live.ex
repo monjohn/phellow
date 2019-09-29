@@ -1,6 +1,7 @@
 defmodule PhellowWeb.BoardsLive do
   use Phoenix.LiveView
   alias Phellow.Content
+  alias Phellow.Content.Card
 
   @topic "board_updates"
 
@@ -29,7 +30,18 @@ defmodule PhellowWeb.BoardsLive do
   end
 
   def update_board_for_subscribers(board_id) do
-    Phoenix.PubSub.broadcast(Phellow.PubSub, @topic, {__MODULE__, {:update_board, board_id}})
+    Phoenix.PubSub.broadcast_from!(
+      Phellow.PubSub,
+      self(),
+      @topic,
+      {__MODULE__, {:update_board, board_id}}
+    )
+
+    # Phoenix.PubSub.broadcast(
+    #   Phellow.PubSub,
+    #   @topic,
+    #   {__MODULE__, {:update_board, board_id}}
+    # )
   end
 
   def handle_event("show_boards", %{"should_show" => value}, socket) do
@@ -140,7 +152,10 @@ defmodule PhellowWeb.BoardsLive do
   end
 
   def handle_event("add_card", %{"card" => %{"title" => title, "list_id" => list_id}}, socket) do
-    Content.create_card(%{"title" => title, "list_id" => list_id})
+    ## Make room at beginning of list, kind of a hack
+    Content.reorder_list_after_adding_card(%Card{list_id: list_id, position: -1})
+
+    Content.create_card(%{"title" => title, "list_id" => list_id, "position" => 0})
 
     update_board_for_subscribers(socket.assigns.current_board.id)
     {:noreply, assign(socket, lists: current_lists(socket), show_card_composer: 0)}

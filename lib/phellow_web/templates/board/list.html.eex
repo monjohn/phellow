@@ -1,6 +1,7 @@
 <% dom_id = "list" <> Integer.to_string(@list_id) %>
+<% sorted_cards = Enum.sort(@cards,  &(&1.position <= &2.position)) %>
 <div class="list-cards" id="<%= dom_id %>" data-list-id="<%= @list_id %>" >
-  <%= for card <- @cards do %>
+  <%= for card <- sorted_cards do %>
     <% editing? = @edit_card_title == card.id %>
     <div class="list-card" data-card-id="<%= card.id %>" data-list-id="<%= @list_id %>" >
       <div  phx-click="archive_card" phx-value-card_id="<%= card.id %>">
