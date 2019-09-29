@@ -1,20 +1,20 @@
 # Phellow
 
-To start your Phoenix server:
+## A Trello Clone in Phoenix using LiveView
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+[Try out the app live](https://quizzical-frizzy-chameleon.gigalixirapp.com/)
+
+![Phellow demonstration](/assets/static/images/Phello-demonstration.gif)
+
+Phoenix LiveView is awesome. I wrote a basic Trello clone with less than 100 lines of Javascript. The logic in Elixir is a bit over 200 lines (see `lib/phellow_web/live/boards_live.ex`).
+
+This project is for testing and learning, hopefully it could be a reference for others who are exploring the same ideas, notably LiveView, Phoenix PubSub, and Ecto. I would also appreciate it greatly if anyone has feedback on the code that I have written on ways that it could be improved.
+
+To run locally:
+
+- Install dependencies with `mix deps.get`
+- Create and migrate your database with `mix ecto.setup`
+- Install Node.js dependencies with `cd assets && npm install`
+- Start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
