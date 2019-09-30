@@ -46,7 +46,6 @@
           <i class="material-icons ">more_horiz</i>
         </div>
       </div>
-      <%  dom_id = "list" <> Integer.to_string(list.id) %>
       <%= render("list.html", list_id: list.id, cards: list.cards, edit_card_title: @edit_card_title) %>
       <%= if @show_card_composer == list.id do %>
         <div class="card-composer">

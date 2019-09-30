@@ -65,6 +65,11 @@ defmodule Phellow.ContentTest do
   end
 
   describe "lists" do
+    setup do
+      board = board_fixture()
+      {:ok, board: board}
+    end
+
     alias Phellow.Content.List
 
     @valid_attrs %{position: 42, title: "some title"}
@@ -80,61 +85,42 @@ defmodule Phellow.ContentTest do
       list
     end
 
-    test "list_lists/0 returns all lists" do
-      list = list_fixture()
-      assert Content.list_lists() == [list]
-    end
-
-    test "get_list!/1 returns the list with given id" do
-      list = list_fixture()
+    test "get_list!/1 returns the list with given id", %{board: board} do
+      list = list_fixture(%{board_id: board.id})
       assert Content.get_list!(list.id) == list
     end
 
-    test "create_list/1 with valid data creates a list" do
-      assert {:ok, %List{} = list} = Content.create_list(@valid_attrs)
+    test "create_list/1 with valid data creates a list", %{board: board} do
+      attrs = Map.merge(%{board_id: board.id}, @valid_attrs)
+      assert {:ok, %List{} = list} = Content.create_list(attrs)
       assert list.position == 42
       assert list.title == "some title"
     end
 
-    test "create_list/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Content.create_list(@invalid_attrs)
-    end
-
-    test "update_list/2 with valid data updates the list" do
-      list = list_fixture()
+    test "update_list/2 with valid data updates the list", %{board: board} do
+      list = list_fixture(%{board_id: board.id})
       assert {:ok, %List{} = list} = Content.update_list(list, @update_attrs)
       assert list.position == 43
       assert list.title == "some updated title"
     end
 
-    test "update_list/2 with invalid data returns error changeset" do
-      list = list_fixture()
-      assert {:error, %Ecto.Changeset{}} = Content.update_list(list, @invalid_attrs)
-      assert list == Content.get_list!(list.id)
-    end
-
-    test "delete_list/1 deletes the list" do
-      list = list_fixture()
+    test "delete_list/1 deletes the list", %{board: board} do
+      list = list_fixture(%{board_id: board.id})
       assert {:ok, %List{}} = Content.delete_list(list)
       assert_raise Ecto.NoResultsError, fn -> Content.get_list!(list.id) end
     end
 
-    test "change_list/1 returns a list changeset" do
-      list = list_fixture()
-      assert %Ecto.Changeset{} = Content.change_list(list)
-    end
-
-    test "reorder_lists/2 reorders list when list moves right" do
-      _list0 = list_fixture(%{position: 0})
-      list1 = list_fixture(%{position: 1})
+    test "reorder_lists/2 reorders list when list moves right", %{board: board} do
+      _list0 = list_fixture(%{position: 0, board_id: board.id})
+      list1 = list_fixture(%{position: 1, board_id: board.id})
 
       Content.reorder_lists(0, 1)
       assert %{position: 0} = Content.get_list!(list1.id)
     end
 
-    test "reorder_lists/2 reorders list when list moves left" do
-      list0 = list_fixture(%{position: 0})
-      _list1 = list_fixture(%{position: 1})
+    test "reorder_lists/2 reorders list when list moves left", %{board: board} do
+      list0 = list_fixture(%{position: 0, board_id: board.id})
+      _list1 = list_fixture(%{position: 1, board_id: board.id})
 
       Content.reorder_lists(1, 0)
       assert %{position: 1} = Content.get_list!(list0.id)
@@ -148,62 +134,47 @@ defmodule Phellow.ContentTest do
     @update_attrs %{description: "some updated description", title: "some updated title"}
     @invalid_attrs %{description: nil, title: nil}
 
+    setup do
+      board = board_fixture()
+      {:ok, board: board}
+    end
+
     def card_fixture(attrs \\ %{}) do
-      list = list_fixture()
+      list = list_fixture(attrs)
 
       {:ok, card} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Map.merge(%{list_id: list.id})
+        |> Map.merge(%{list_id: list.id, position: 0})
         |> Content.create_card()
 
       card
     end
 
-    # test "list_cards/0 returns all cards" do
-    #   card = card_fixture()
-    #   assert Content.list_cards() == [card]
-    # end
-
-    test "get_card!/1 returns the card with given id" do
-      card = card_fixture()
+    test "get_card!/1 returns the card with given id", %{board: board} do
+      card = card_fixture(%{board_id: board.id})
       assert Content.get_card!(card.id) == card
     end
 
-    test "create_card/1 with valid data creates a card" do
-      list = list_fixture()
+    test "create_card/1 with valid data creates a card", %{board: board} do
+      list = list_fixture(%{board_id: board.id})
       params = Map.put(@valid_attrs, :list_id, list.id)
       assert {:ok, %Card{} = card} = Content.create_card(params)
       assert card.description == "some description"
       assert card.title == "some title"
     end
 
-    test "create_card/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Content.create_card(@invalid_attrs)
-    end
-
-    test "update_card/2 with valid data updates the card" do
-      card = card_fixture()
+    test "update_card/2 with valid data updates the card", %{board: board} do
+      card = card_fixture(%{board_id: board.id})
       assert {:ok, %Card{} = card} = Content.update_card(card, @update_attrs)
       assert card.description == "some updated description"
       assert card.title == "some updated title"
     end
 
-    test "update_card/2 with invalid data returns error changeset" do
-      card = card_fixture()
-      assert {:error, %Ecto.Changeset{}} = Content.update_card(card, @invalid_attrs)
-      assert card == Content.get_card!(card.id)
-    end
-
-    test "delete_card/1 deletes the card" do
-      card = card_fixture()
+    test "delete_card/1 deletes the card", %{board: board} do
+      card = card_fixture(%{board_id: board.id})
       assert {:ok, %Card{}} = Content.delete_card(card)
       assert_raise Ecto.NoResultsError, fn -> Content.get_card!(card.id) end
-    end
-
-    test "change_card/1 returns a card changeset" do
-      card = card_fixture()
-      assert %Ecto.Changeset{} = Content.change_card(card)
     end
   end
 end
