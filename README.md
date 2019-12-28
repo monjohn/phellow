@@ -1,8 +1,8 @@
+[![Generic badge](https://img.shields.io/circleci/build/github/monjohn/phellow.svg)](https://shields.io/)
+
 # Phellow
 
 ## A Trello Clone in Phoenix using LiveView
-
-[Try out the app live](https://quizzical-frizzy-chameleon.gigalixirapp.com/)
 
 ![Phellow demonstration](/assets/static/images/Phello-demonstration.gif)
 
