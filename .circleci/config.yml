@@ -1,0 +1,86 @@
+# Elixir CircleCI 2.0 configuration file
+#
+defaults: &defaults
+  parallelism: 1 # run only one instance of this job in parallel
+
+  working_directory: ~/app # directory where steps will run
+
+version: 2
+jobs:
+  test:
+    <<: *defaults
+    docker:
+      - image: circleci/elixir
+        environment:
+          MIX_ENV: test
+      - image: circleci/postgres:10.1-alpine
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: app_test
+          POSTGRES_PASSWORD: secret
+    steps:
+      - checkout
+
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+
+      - restore_cache:
+          keys:
+            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - v1-mix-cache-{{ .Branch }}
+            - v1-mix-cache
+      - restore_cache:
+          keys:
+            - v1-build-cache-{{ .Branch }}
+            - v1-build-cache
+      - run: mix do deps.get, compile
+      - save_cache:
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          paths:
+            - "deps"
+      - save_cache:
+          key: v1-mix-cache-{{ .Branch }}
+          paths:
+            - "deps"
+      - save_cache:
+          key: v1-mix-cache
+          paths:
+            - "deps"
+      - save_cache:
+          key: v1-build-cache-{{ .Branch }}
+          paths:
+            - "deps"
+      - save_cache:
+          key: v1-build-cache
+          paths:
+            - "_build"
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: mix test
+      - store_test_results:
+          path: _build/test/lib/phellow
+
+  deploy:
+    <<: *defaults
+    docker:
+      - image: circleci/elixir
+    steps:
+      - add_ssh_keys
+      - run: ssh-keyscan -H 157.245.15.177 >> ~/.ssh/known_hosts
+      - run:
+          name: Deploy if tests pass and branch is develop
+          command: ssh deploy@157.245.15.177 ./phellow/scripts/deploy.sh
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
