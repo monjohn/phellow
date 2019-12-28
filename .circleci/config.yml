@@ -71,7 +71,7 @@ jobs:
       - run: ssh-keyscan -H 157.245.15.177 >> ~/.ssh/known_hosts
       - run:
           name: Deploy if tests pass and branch is develop
-          command: ssh deploy@157.245.15.177 ./worte/scripts/deploy.sh
+          command: ssh deploy@157.245.15.177 ./phellow/scripts/deploy.sh
 
 workflows:
   version: 2
@@ -81,6 +81,6 @@ workflows:
       - deploy:
           requires:
             - test
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
