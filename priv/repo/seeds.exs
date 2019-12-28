@@ -10,9 +10,8 @@
 # and so on) as they will fail if something goes wrong.
 
 [
-    %{title: "In Progress", id: 2, position: 1},
-    %{title: "Upcoming", id: 1, position: 0},
-    %{title: "Done", id: 3, position: 2}
- ]
- |> Enum.each(fn params -> Phellow.Repo.insert!(params))
-
+  %{title: "In Progress", id: 2, position: 1},
+  %{title: "Upcoming", id: 1, position: 0},
+  %{title: "Done", id: 3, position: 2}
+]
+|> Enum.each(fn params -> Phellow.Repo.insert!(params) end)
