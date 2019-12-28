@@ -55,12 +55,12 @@ jobs:
           paths:
             - "_build"
 
-      # - run:
-      #     name: Wait for DB
-      #     command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      # - run: mix test
-      # - store_test_results:
-      #     path: _build/test/lib/worte
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: mix test
+      - store_test_results:
+          path: _build/test/lib/phellow
 
   deploy:
     <<: *defaults
@@ -75,13 +75,6 @@ jobs:
 
 workflows:
   version: 2
-  build-and-test:
-    jobs:
-      - test:
-          filters:
-            branches:
-              ignore: master
-
   build-test-and-deploy:
     jobs:
       - test
