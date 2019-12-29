@@ -9,8 +9,7 @@ MIX_ENV=prod mix compile
 
 npm run deploy --prefix ./assets
 
-# mix do ecto.create, ecto.migrate
-# MIX_ENV=prod mix ecto.migrate
+MIX_ENV=prod mix do ecto.create, ecto.migrate
 # cd assets && npm install && npm run deploy & cd ..
 mix phx.digest
 mix compile
