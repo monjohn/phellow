@@ -46,7 +46,20 @@
           <i class="material-icons ">more_horiz</i>
         </div>
       </div>
-      <%= render("list.html", list_id: list.id, cards: list.cards, edit_card_title: @edit_card_title) %>
+      <% dom_id = "list" <> Integer.to_string(list.id) %>
+      <% sorted_cards = Enum.sort(list.cards,  &(&1.position <= &2.position)) %>
+      <div class="list-cards" id="<%= dom_id %>" data-list-id="<%= list.id %>" >
+        <%= for card <- sorted_cards do %>
+          <%= live_component(
+          @socket,
+          PhellowWeb.CardComponent,
+          card: card,
+          edit_card_title: @edit_card_title,
+          list_id: list.id
+        )
+    %>
+        <% end %>
+      </div>
       <%= if @show_card_composer == list.id do %>
         <div class="card-composer">
           <%= form_for :card, "#", [phx_submit: :add_card], fn f -> %>

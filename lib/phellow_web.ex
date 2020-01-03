@@ -48,6 +48,22 @@ defmodule PhellowWeb do
     end
   end
 
+  def live_view do
+    quote do
+      use Phoenix.View,
+        root: "lib/phellow_web/templates",
+        namespace: PhellowWeb
+
+      import Phoenix.LiveView
+
+      use Phoenix.HTML
+
+      import PhellowWeb.ErrorHelpers
+      import PhellowWeb.Gettext
+      alias PhellowWeb.Router.Helpers, as: Routes
+    end
+  end
+
   def router do
     quote do
       use Phoenix.Router
