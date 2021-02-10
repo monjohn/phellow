@@ -43,7 +43,8 @@ defmodule PhellowWeb do
       import PhellowWeb.ErrorHelpers
       import PhellowWeb.Gettext
 
-      import Phoenix.LiveView, only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2]
+      import Phoenix.LiveView.Helpers
+      # import Phoenix.LiveView, only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2]
       alias PhellowWeb.Router.Helpers, as: Routes
     end
   end
@@ -55,6 +56,7 @@ defmodule PhellowWeb do
         namespace: PhellowWeb
 
       import Phoenix.LiveView
+      import Phoenix.LiveView.Helpers
 
       use Phoenix.HTML
 

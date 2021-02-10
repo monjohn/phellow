@@ -8,6 +8,7 @@ defmodule Phellow.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
+      {Phoenix.PubSub, name: Phellow.PubSub},
       # Start the Ecto repository
       Phellow.Repo,
       # Start the endpoint when the application starts

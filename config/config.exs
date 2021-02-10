@@ -15,7 +15,7 @@ config :phellow, PhellowWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "4qBqV8Gg9B3l6kC9FOYXrQLAU0lcTq7xT8qHWRw+mimehLhkylzY1nF0tli2MdF/",
   render_errors: [view: PhellowWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Phellow.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: Phellow.PubSub,
   live_view: [
     signing_salt: "SuAgXm2wHxz8QEsX+Lu0vjXk/Fb4aLkb"
   ]

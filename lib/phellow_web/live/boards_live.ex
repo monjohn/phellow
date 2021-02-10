@@ -9,7 +9,7 @@ defmodule PhellowWeb.BoardsLive do
     PhellowWeb.BoardView.render("board.html", assigns)
   end
 
-  def mount(_session, socket) do
+  def mount(_params, _session, socket) do
     Phoenix.PubSub.subscribe(Phellow.PubSub, @topic)
 
     current_board = Content.get_board!(1)
