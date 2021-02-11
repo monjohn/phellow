@@ -10,6 +10,8 @@ Phoenix LiveView is awesome. I wrote a basic Trello clone with less than 100 lin
 
 This project is for testing and learning, hopefully it could be a reference for others who are exploring the same ideas, notably LiveView, Phoenix PubSub, and Ecto. I would also appreciate it greatly if anyone has feedback on the code that I have written on ways that it could be improved.
 
+[Here's a live example](https://phellow.focusworks.dev)
+
 To run locally:
 
 - Install dependencies with `mix deps.get`
