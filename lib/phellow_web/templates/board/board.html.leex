@@ -38,9 +38,9 @@
   <%= for list <- @lists do %>
     <div  class="list-wrapper" id="<%= list.id %>" data-position="<%= list.position %>" phx-hook="List">
       <div class="list">
-        <div class="list-header" phx-hook="ListTitle" >
-          <input style="display:<%= if @edit_list_title == list.id, do: "block", else: "none" %>" autofocus 
-                 name="list-title"  phx-hook="ListTitle" value="<%= list.title %>" data-list_id="<%= list.id %>"></input>
+        <div class="list-header" id="<%= list.id %>"  phx-hook="ListTitle" >
+          <input style="display:<%= if @edit_list_title == list.id, do: "block", else: "none" %>" autofocus
+                 name="list-title"  phx-hook="ListTitle" value="<%= list.title %>" data-list_id="<%= list.id %>" id="<%= list.id %>"></input>
         <h2 phx-click="edit_list_title" phx-value-list_id="<%= list.id %>" style="display: <%= if @edit_list_title  == list.id, do: "none", else: "block" %>"><%= list.title %></h2>
         <div class="more-list-actions icons" >
           <i class="material-icons ">more_horiz</i>

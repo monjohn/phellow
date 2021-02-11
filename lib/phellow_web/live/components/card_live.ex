@@ -10,7 +10,7 @@ defmodule PhellowWeb.CardComponent do
         <i class="material-icons delete-card">delete</i>
       </div>
       <textarea style="display:<%= if editing?, do: "block", else: "none" %>" autofocus
-        name="card-title"  phx-hook="CardTitle" value="<%= @card.title %>" data-card_id="<%= @card.id %>"><%= @card.title %></textarea>
+        name="card-title"  phx-hook="CardTitle" value="<%= @card.title %>" id="<%= @card.id %>" data-card_id="<%= @card.id %>"><%= @card.title %></textarea>
       <div phx-click="edit_card_title" phx-value-card_id="<%= @card.id %>"
        class="list-card-title" style="display: <%= if editing?, do: "none", else: "block" %>" >
         <%= @card.title %>
